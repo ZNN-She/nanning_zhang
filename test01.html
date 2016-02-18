@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>先择省份城市</title>
+	<script type="text/javascript" language="javascript">
+	var data = ["大幅", "公司", "华国锋"];
+		function test01(ele){
+			if(ele == 1){
+				data = ["大幅", "公司", "华国锋"];
+			}else if(ele == 2){
+				data = ["fda", "adsf", "gsdgfd"];
+			}else if(ele == 3){
+				data = ["123", "435", "7768"];
+			};
+		};
+
+	</script>
+</head>
+<body>
+	<select onchange="test01(this.value)">
+		<option value="1" selected>1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+	</select>
+	<select>
+		<option></option>
+		<option></option>
+		<option></option>
+	</select>
+</body>
+</html>
