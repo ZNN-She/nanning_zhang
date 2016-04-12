@@ -61,16 +61,15 @@
 		};
 		// 柱状图 竖向 折线图 双坐标
 		option2 = {
+			grid:{
+				show:false,
+
+			},
 		    tooltip: {
 		        trigger: 'axis'
 		    },
 		    toolbox: {
-		        feature: {
-		            dataView: {show: true, readOnly: false},
-		            magicType: {show: true, type: ['line', 'bar']},
-		            restore: {show: true},
-		            saveAsImage: {show: true}
-		        }
+		    	show:false,
 		    },
 		    legend: {
 		        data:['蒸发量','降水量','平均温度']

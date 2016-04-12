@@ -5,8 +5,8 @@
 	<title>Document</title>
 </head>
 <body>
-	
-	<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+
+	<input class="fileupload" id="fileupload" type="file" name="files[]" data-url="server/php/"multiple>
 
 	<button class="test" >test</button>
 
@@ -33,9 +33,7 @@
 		                    $(this).replaceWith($('<p/>').text('Uploading...'));
 		                    data.submit();
 		                });*/
-		                data.context = $('.test').text('Upload')
-		                .click(function () {
-		                    $(this).replaceWith($('<p/>').text('Uploading...'));
+		                data.context = $('.test').click(function () {
 		                    data.submit();
 		                });
 		        },
@@ -43,7 +41,6 @@
 		            data.context.text('Upload finished.');
 		        }
 		    });
-
 		});
 	 	/*function test() {
 	 		var a = b;
