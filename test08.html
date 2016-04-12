@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<input id="fileupload" type="file" name="files[]" data-url="server/php/" multiple>
+
+	<button class="test" >test</button>
+
+	<script type="text/javascript" src="plugins/jQuery/jquery.min.js"></script>
+	<script type="text/javascript" src="plugins/jquery-uploade-file/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="plugins/jquery-uploade-file/js/jquery.iframe-transport.js"></script>
+	<script type="text/javascript" src="plugins/jquery-uploade-file/js/jquery.fileupload.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			/*$('#fileupload').fileupload({
+		        dataType: 'json',
+		        done: function (e, data) {
+		            $.each(data.result.files, function (index, file) {
+		                $('<p/>').text(file.name).appendTo(document.body);
+		            });
+		        }
+		    });*/
+		    $('#fileupload').fileupload({
+		        dataType: 'json',
+		        add: function (e, data) {
+		            /*data.context = $('<button/>').text('Upload')
+		                .appendTo(document.body)
+		                .click(function () {
+		                    $(this).replaceWith($('<p/>').text('Uploading...'));
+		                    data.submit();
+		                });*/
+		                data.context = $('.test').text('Upload')
+		                .click(function () {
+		                    $(this).replaceWith($('<p/>').text('Uploading...'));
+		                    data.submit();
+		                });
+		        },
+		        done: function (e, data) {
+		            data.context.text('Upload finished.');
+		        }
+		    });
+
+		});
+	 	/*function test() {
+	 		var a = b;
+	    	$('#fileupload').fileupload({
+		        dataType: 'json',
+		        add: function (e, data) {
+		            data.context = $('<button/>').text('Upload')
+		                .appendTo(document.body)
+		                .click(function () {
+		                    $(this).replaceWith($('<p/>').text('Uploading...'));
+		                    data.submit();
+		                });
+		        },
+		        done: function (e, data) {
+		            data.context.text('Upload finished.');
+		        }
+		    });
+	    }*/
+	</script>
+</body>
+</html>

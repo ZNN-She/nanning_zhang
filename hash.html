@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>使用地址栏hash值模拟浏览器前进后退功能</title>
+	<style>
+		nav { background: gray; padding: 20px; margin: 50px auto; width: 700px; height: 50px; }
+		nav ul, nav li { padding: 0; margin: 0; list-style: none; }
+		nav li { float: left; background: black; margin: 0 5px; height: 40px; line-height: 40px; }
+		nav a { display: block; padding: 0 5px; color: white; text-decoration: none; }
+		nav a.selected { background: red; }
+	</style>
+</head>
+<body>
+<nav>
+	<ul>
+		<li><a href="#1">链接1</a></li>
+		<li><a href="#2">链接2</a></li>
+		<li><a href="#3">链接3</a></li>
+		<li><a href="#4">链接4</a></li>
+		<li><a href="#5">链接5</a></li>
+		<li><a href="#6">链接6</a></li>
+		<li><a href="#7">链接7</a></li>
+		<li><a href="#8">链接8</a></li>
+		<li><a href="#9">链接9</a></li>
+	</ul>
+</nav>
+<script>
+// 使用地址栏hash值模拟浏览器前进后退功能
+// 相对于hisitory模拟
+// 优点是兼容性更好些（不支持ie67，但可以用定时器模拟）
+// 缺点是不利于seo
+document.addEventListener('DOMContentLoaded', function() {
+	//缓存tab对象
+	var tabs = document.getElementsByTagName('a'), tabidx = location.hash.replace('#', '');
+	//初始化
+	if (!location.hash) {
+		//hash值初始化
+		location.hash = '#1';
+		//高亮第一个tab
+		tabs[0].className = 'selected';
+	} else {
+		tabs[tabidx-1].className = 'selected';
+	}
+}, false);
+//监控hash值的变化
+window.addEventListener('hashchange', function() {
+	//读取当前tab对应的hash
+	var tabs = document.getElementsByTagName('a'), tabidx = location.hash.replace('#', '');
+	//去除之前tab高亮
+	for(var i=0, count=tabs.length; i<count; i++) {
+		tabs[i].className = '';
+	}
+	//为当前tab添加高亮
+	tabs[tabidx-1].className = 'selected';
+}, false);
+</script>
+</body>
+</html>
