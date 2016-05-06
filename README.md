@@ -8,7 +8,8 @@ test02 全国省市二级下拉表
 test03 菜单伸缩
 test04 marquee的各种滚动
 test05 marquee无缝滚动
-text06 无缝向上滚动
-text07 上传文件 下载文件
-
-text09 百度图表
+test06 无缝向上滚动
+test07 上传文件 下载文件
+test08 jquery-uploade-file
+test09 百度图表
+test10 highmaps中国地图
