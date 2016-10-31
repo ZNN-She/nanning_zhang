@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>  
+<html>  
+ <head>  
+  <title>鼠标长按事件</title>  
+  <meta charset="utf-8">
+  <meta name="Generator" content="EditPlus">  
+  <meta name="Author" content="">  
+  <meta name="Keywords" content="">  
+  <meta name="Description" content="">  
+  <script>  
+        var num = 0 ;   
+        function whichElement(e){  
+            var timer_alert = setTimeout(function() {  
+            if(e.which==1) {  
+                num++  
+                if(num==2){  
+                    num=0;   
+                    alert( "鼠标长按" );   
+                }else{  
+                    whichElement( e );  
+                }  
+            }  
+        }, 1000) ;
+  
+    }  
+  </script>  
+ </head>  
+  
+ <body>  
+   <div style="border:1px solid #E0E0E0;width:120px;height:130px;" onmousedown="whichElement(event)">  
+       
+   </div>  
+ </body>  
+</html>  

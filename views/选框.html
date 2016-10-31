@@ -1,0 +1,99 @@
+<div class="view-sms-discount-send">
+    <div class="modal-header text-center clearfix">
+        <h4 class="modal-title pull-left">发送优惠券</h4>
+        <span class="pull-right glyphicon glyphicon-remove" data-ng-click="cancel()"> </span>
+    </div>
+    <div class="modal-body">
+        <div class="clearfix">
+            <div style="margin-bottom: 10px;">
+                <form class="form-horizontal">
+                    <div class="form-group clearfix">
+                        <label class="control-label">旺旺昵称：</label>
+
+                        <div class="controls">
+                            <input type="text" class="form-control form-control-static input-sm" ng-model="ownerNick"/>
+                        </div>
+                    </div>
+                    <button class="btn btn-base btn-sm" ng-click="searchOwnerNick()">搜索</button>
+                </form>
+            </div>
+            <div class="content clearfix">
+                <div class="col-xs-10">
+                    <div class="data-table">
+                        <table ng-show="list.length" class="table table-hover" dp-flex style="background: #fff">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="isCheckboxAll" ng-change="checkboxAll(item)">
+                                            全选
+                                        </label>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li ng-repeat="item in list">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" ng-model="item.checkbox" ng-change="checkboxOne(item)">
+                                                    {{item.name}}{{item.checkbox}}
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table ng-if="!list.length" class="table table-hover" dp-flex style="background: #fff">
+                            <thead>
+
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="6" col>
+                                    <div class="none-item-container">
+                                        <div class="none-item">
+                                            <div class="icon">
+                                            </div>
+                                            没有数据哦~换个搜索条件试试吧~ <a href=""></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="paging-bar">
+                        <div class="col-xs-12">
+                            <paging class="pull-right" page="pageNo" page-size="pageSize" total="count" show-prev-next="true"
+                                    paging-action="getResultsPage(page,pageSize,total)"></paging>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2 name-list">
+                    <div class="checkbox" ng-repeat="item in checkList">
+                        <label>
+                            <span class="glyphicon glyphicon-remove" ng-click="cancelCheckbox(item)">
+
+                            </span>
+                            {{item.name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="text-center">
+            <button class="btn w-100 btn-base" ng-click="save()">保存</button>
+            <button class="btn btn-base w-100" data-dismiss="modal" ng-click="cancel()">取消</button>
+        </div>
+    </div>
+
+</div>

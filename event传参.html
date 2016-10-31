@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>event传参</title>
+</head>
+<body>
+	<div style="height:100px; width:100px; background:#ddd;" onclick="testclick(event)">
+		click
+	</div>
+	<div style="height:100px; width:100px; background:#dd0;" onclick="testclick()">
+		click3
+	</div>
+	<div style="height:100px; width:100px; background:#d0d;" id="idclick">
+		idclick
+	</div>
+	<div style="height:100px; width:100px; background:#00d;" id="idjquery">
+		idjquery
+	</div>
+
+	<script src="plugins/jQuery/jquery-2.1.4.js"></script>
+	<script>
+		function testclick(event){
+			console.log(event);
+		}
+		document.getElementById("idclick").onclick = function(event) {
+			console.log(event);
+		};
+		$("#idjquery").on('click', function(event) {
+			console.log(event);
+		});
+	</script>
+</body>
+</html>

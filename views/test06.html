@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		#demo {
+			background: #FFF;
+			overflow:hidden;
+			border: 1px dashed #CCC;
+			height: 100px;
+			text-align: center;
+			float: left;
+		}
+		#demo h3 {
+			border: 3px solid #F2F2F2;
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div id="demo">
+		<div id="demo1">
+			<h3>
+				1111111111111111111111111111111111111111111111
+			</h3>
+			<h3>
+				2222222222222222222222222222222222222222222222222
+			</h3>
+			<h3>
+				333333333333333333333333333333333333333
+			</h3>
+			<h3>
+				4444444444444444444444444444444444444
+			</h3>
+		</div>
+		<div id="demo2"></div>
+	</div>
+
+</body>
+	<script>
+		var speed=50; //数字越大速度越慢
+		var tab=document.getElementById("demo");
+		var tab1=document.getElementById("demo1");
+		var tab2=document.getElementById("demo2");
+		tab2.innerHTML=tab1.innerHTML; //克隆demo1为demo2
+		function Marquee(){
+			if(tab2.offsetTop-tab.scrollTop<=0)//当滚动至demo1与demo2交界时
+				tab.scrollTop-=tab1.offsetHeight //demo跳到最顶端
+			else{
+				tab.scrollTop++
+			}
+		}
+		var MyMar=setInterval(Marquee,speed);
+		tab.onmouseover=function() {clearInterval(MyMar)};//鼠标移上时清除定时器达到滚动停止的目的
+		tab.onmouseout=function() {MyMar=setInterval(Marquee,speed)};//鼠标移开时重设定时器
+	</script>
+</html>

@@ -1,0 +1,81 @@
+
+<!DOCTYPE>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>京东、淘宝晒单</title>
+	<style>@charset "utf-8";</style>
+</head>
+<body>
+	<marquee  onmouseout="this.start();" onmouseover="this.stop();" direction="up" scrolldelay="50" scrollamount="3">
+		我爱模板网精选各种网页模板，css模板，网页特效，广告代码，开源网站源码，建站素材，精美网站欣赏，全部免费下载。并提供各种建站教程，力图帮助新手解决建站困难。找模板，找素材，找教程，就来我爱模板网。
+	</marquee>
+
+	<marquee behavior="alternate" onmouseout="this.start();" onmouseover="this.stop();" direction="up" scrolldelay="50" scrollamount="2" style="height: 50px;" >
+		<table>
+			<tr>
+				<a href="http://baidu.com">http://baidu.com</a>
+			</tr>
+			<tr>
+				<td>222222222222</td>
+			</tr>
+			<tr>
+				<td>333333333333</td>
+			</tr>
+			<tr>
+				<td>44444444444</td>
+			</tr>
+		</table>
+	</marquee>
+
+	<marquee  behavior="slide" contenteditable="true" onstart="this.firstChild.innerHTML+=this.firstChild.innerHTML;" scrollamount="3" width="100" onmouseover="this.stop();" onmouseout="this.start();">
+		<table>
+			<tr>
+				<td>111111111111</td>
+			</tr>
+			<tr>
+				<td>222222222222</td>
+			</tr>
+			<tr>
+				<td>333333333333</td>
+			</tr>
+			<tr>
+				<td>44444444444</td>
+			</tr>
+		</table>
+	</marquee>
+
+	<MARQUEE behavior="scroll" contenteditable="true" onstart="this.firstChild.innerHTML+=this.firstChild.innerHTML;" scrollamount="3" width="100" direction="up">
+		<SPAN unselectable="on"></SPAN>
+	</MARQUEE>
+	<DIV id="scrollobj" style="white-space:nowrap;overflow:hidden;width:500px;" onmouseover="aa()" onmouseout="b()" >
+		[CROSSSELLING3]
+		[CROSSSELLING4]
+		[CROSSSELLING5]
+		[CROSSSELLING6]
+		[CROSSSELLING7]
+		[CROSSSELLING8]
+		[CROSSSELLING9]
+		[CROSSSELLING10]
+	</DIV>
+	<script language="javascript" type="text/javascript">
+<!--
+	function scroll(obj) {
+		var tmp = (obj.scrollLeft)++;
+		//当滚动条到达右边顶端时
+		if (obj.scrollLeft==tmp) obj.innerHTML += obj.innerHTML;
+		//当滚动条滚动了初始内容的宽度时滚动条回到最左端
+		if (obj.scrollLeft>=obj.firstChild.offsetWidth) obj.scrollLeft=0;
+	}
+	var a =	setInterval("scroll(document.getElementById('scrollobj'))",20);
+	function aa(){
+		clearInterval(a);
+	}
+	function b(){
+		a=setInterval("scroll(document.getElementById('scrollobj'))",10);
+	}
+//-->
+</script>
+	<script type="text/javascript" src="jquery-1.4.js"></script>
+</body>
+</html>

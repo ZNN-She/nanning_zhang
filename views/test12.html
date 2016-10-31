@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<div>
+		<textarea id="test" name="test" style="width: 500px; height: 400px;"></textarea>
+	</div>
+
+	<button onclick="setHtml()">设置内容</button>
+	<button onclick="getHtml()">获取html</button>
+	<button onclick="getFullHtml()">获取完整html</button>
+	<button onclick="getText()">获取纯文本</button>
+	<button onclick="setText()">设置文本内容</button>
+	<button onclick="getSelectHtml()">获取选中的html内容</button>
+	
+	<script type="text/javascript" src="../plugins/kindeditor-master/kindeditor-all.js"></script>
+	<script type="text/javascript" src="../plugins/kindeditor-master/lang/zh-CN.js"></script>
+	<script type="text/javascript">
+		var editor = null;
+		init();
+		function init() {
+			KindEditor.ready(function(K) {
+                // window.editor = K.create('#editor_id');
+                var options = {
+        			filterMode : true,
+        			items:[
+        				'source', '|', 'undo', 'redo', '|', 'justifyleft', 'justifycenter', 'justifyright','justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent',  '|',  'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold','italic', 'underline', 'strikethrough', 'lineheight', 'removeformat','fullscreen', '/', 'image', 'hr', 'link', 'unlink'
+					]
+				};
+				editor = K.create('textarea[name="test"]', options);
+        	});
+			
+		}
+		function setHtml () {
+			c.html('<p>设置内容</p><div>dddd</div>');
+		}
+		function getHtml() {
+			alert(editor.html()); 
+		}
+		function getFullHtml () {
+			alert(editor.fullHtml()); 
+		}
+		function getText() {
+			 alert(editor.text()); 
+		}
+		function setText() {
+			editor.html('<p>设置内容</p><div>dddd</div>asd');
+		}
+		function getSelectHtml() {
+			alert(editor.selectedHtml()); 
+		}
+	</script>
+</body>
+</html>
+<script type="text/javascript">
+	
+var a={n:1}
+var b=a;
+
+a.x=a={n:2}
+
+console.log(a.x)
+console.log(b.x)
+
+
+</script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>使用history的html5新特性（pushState、replaceState、onpopstate）模拟浏览器前进后退功能</title>
+	<style>
+		nav { background: gray; padding: 20px; margin: 50px auto; width: 700px; height: 50px; }
+		nav ul, nav li { padding: 0; margin: 0; list-style: none; }
+		nav li { float: left; background: black; margin: 0 5px; height: 40px; line-height: 40px; }
+		nav a { display: block; padding: 0 5px; color: white; text-decoration: none; }
+		nav a.selected { background: red; }
+	</style>
+</head>
+<body>
+<nav>
+	<ul>
+		<li><a href="#1">链接1</a></li>
+		<li><a href="#2">链接2</a></li>
+		<li><a href="#3">链接3</a></li>
+		<li><a href="#4">链接4</a></li>
+		<li><a href="#5">链接5</a></li>
+		<li><a href="#6">链接6</a></li>
+		<li><a href="#7">链接7</a></li>
+		<li><a href="#8">链接8</a></li>
+		<li><a href="#9">链接9</a></li>
+	</ul>
+</nav>
+<script>
+//使用history的html5新特性（pushState、replaceState、onpopstate）模拟浏览器前进后退功能
+//相对于hash模拟
+//优点是更符合用户习惯（改变内容的同时改变页面地址）、有利于seo
+//缺点是兼容性很差（ie9及以下不支持）
+document.addEventListener('DOMContentLoaded', function() {
+	//缓存tab对象
+	var tabs = document.getElementsByTagName('a'), nav = document.getElementsByTagName('nav')[0];
+	//初始化地址栏
+	if (!history.state) {
+		//更改history中当前页面的地址
+		history.replaceState({'no': 1}, document.title, '?no=1');
+		//改变当前页面的title
+		document.title = 'no=1';
+	}
+	//初始化tab状态
+	for(var i=0, count=tabs.length; i<count; i++) {
+		tabs[history.state.no-1].className = 'selected';
+	}
+	//把点击事件委托到nav上，不必为每个tab绑定点击事件
+	nav.addEventListener('click', function(ev) {
+		if (ev.target.tagName.toLowerCase() === 'a') {
+			//阻止链接的默认行为
+			ev.preventDefault();
+			//读取tab的hash
+			var tab = ev.target, no = tab.getAttribute('href').replace('#', '');
+			//生成当前地址并插入到history中
+			history.pushState({'no': no}, document.title, '?no='+no);
+			//实时改变当前页面的title
+			document.title = 'no='+no;
+			//去除之前tab高亮
+			for(var i=0, count=tabs.length; i<count; i++) {
+				tabs[i].className = '';
+			}
+			//为当前tab添加高亮
+			tab.className = 'selected';
+		}
+	}, false);
+}, false);
+//模拟地址栏前进后退功能
+window.addEventListener('popstate', function(data) {
+	//如果之后没有可后退的链接时跳过
+	if (!data.state) return;
+	//实时改变当前页面的title
+	document.title = 'no='+data.state.no;
+	//高亮对应tab
+	var tabs = document.getElementsByTagName('a');
+	//去除之前tab高亮
+	for(var i=0, count = tabs.length; i<count; i++) {
+		tabs[i].className = '';
+	}
+	//为当前tab添加高亮
+	for(var i=0, count=tabs.length; i<count; i++) {
+		tabs[data.state.no-1].className = 'selected';
+	}
+}, false);
+</script>
+</body>
+</html>

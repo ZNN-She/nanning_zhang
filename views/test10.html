@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="container" style="width: 400px; height: 400px;"></div>
+
+	<script type="text/javascript" src="../plugins/jQuery/jquery.js"></script>
+	<script type="text/javascript" src="../plugins/highmaps/highmaps.src.js"></script>
+	<script type="text/javascript" src="../plugins/highmaps/china.js"></script>
+	<script type="text/javascript">
+		$(function() {
+    // Prepare random data
+    var data = [{
+        value: 727,
+        name: "浙江"
+    }, {
+        value: 727,
+        name: "北京"
+    }, {
+        value: 120,
+        name: '广东'
+    }, {
+        value: 10,
+        name: '内蒙古'
+    }, {
+        value: 200,
+        name: "西藏"
+    }, {
+        value: 200,
+        name: "河南"
+    }];
+    var mapOption = {
+        title: {
+            text: '中国地图'
+        },
+        credits: {
+            enabled: false
+        },
+        colors: function(color) {
+            return {
+                radialGradient: {
+                    cx: 0.5,
+                    cy: 0.3,
+                    r: 0.7
+                },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                ]
+            };
+        }(),
+        chart: {
+            events: {
+                click: function(e) {
+                    var x = Math.round(e.xAxis[0].value),
+                        y = Math.round(e.yAxis[0].value);
+
+                    this.get('clicks').addPoint({
+                        x: x,
+                        y: y,
+                        name: '[' + x + ', ' + y + ']'
+                    });
+                }
+            }
+        },
+        mapNavigation: {
+            enabled: true,
+
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+        colorAxis: {
+            min: 0,
+            stops: [
+                [0, '#EFEFFF'],
+                [0.5, Highcharts.getOptions().colors[0]],
+                [1, '#006cee']
+            ]
+        },
+        tooltip: {
+            formatter: function() {
+                return "<b>" + this.point.name + " </b>\t" + this.point.value;
+            }
+        },
+        series: [ {
+            // Basic China map
+            data: data,
+            mapData: mapArray,
+            joinBy: ['name', 'name'],
+            name: 'Random data',
+            showInLegend: false,
+            events: {
+
+            },
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                style: {
+                    fontSize: '8px'
+                }
+            }
+        }, ]
+
+    }
+    var mapArray = Highcharts.maps['cn-with-city'];
+    var mappoint = Highcharts.geojson(mapArray, 'mappoint');
+    $('#container').highcharts('Map', {
+        title: {
+            text: '中国地图'
+        },
+        credits: {
+            enabled: false
+        },
+        colors: function(color) {
+            return {
+                radialGradient: {
+                    cx: 0.5,
+                    cy: 0.3,
+                    r: 0.7
+                },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                ]
+            };
+        }(),
+        chart: {
+            events: {
+                click: function(e) {
+                    var x = Math.round(e.xAxis[0].value),
+                        y = Math.round(e.yAxis[0].value);
+
+                    this.get('clicks').addPoint({
+                        x: x,
+                        y: y,
+                        name: '[' + x + ', ' + y + ']'
+                    });
+                }
+            }
+        },
+        mapNavigation: {
+            enabled: true,
+
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+        colorAxis: {
+            min: 0,
+            stops: [
+                [0, '#EFEFFF'],
+                [0.5, Highcharts.getOptions().colors[0]],
+                [1, '#006cee']
+            ]
+        },
+        tooltip: {
+            formatter: function() {
+                return "<b>" + this.point.name + " </b>\t" + this.point.value;
+            }
+        },
+        series: [ {
+            // Basic China map
+            data: data,
+            mapData: mapArray,
+            joinBy: ['name', 'name'],
+            name: 'Random data',
+            showInLegend: false,
+            events: {
+
+            },
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                style: {
+                    fontSize: '8px'
+                }
+            }
+        }, ]
+
+    }, function(map) {
+        console.log("Map init ok!");
+
+    });
+
+});
+	</script>
+</body>
+</html>
