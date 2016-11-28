@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件冒泡</title>
+</head>
+<body id="oBubble">
+	<!-- //点击#oBubble弹出Bubble     
+	<div id="oBubble1">
+		//点击#oBubble1先后弹出Bubble1、Bubble         
+		<div id="oBubble2">oBubble</div>
+		//点击#oBubble2先后弹出Bubble2 、Bubble1、Bubble     
+	</div>
+	<textarea id="123" cols="30" rows="10">
+		1.的萨芬快捷键啊发多少
+		2.撒放假咯但是
+	</textarea> -->
+
+
+	<div id="test-01" style="padding:20px;background:#ddd;">
+		div1
+		<div class="item" indexaa="1" style="width:100px;height:100px;background:#dd0;">
+			div2
+			<div style="width:50px;height:50px;background:#d00;">
+				div3
+			</div>
+		</div>
+		<div class="item" indexaa="2" style="width:100px;height:100px;background:#dd0;">
+			div2
+			<div style="width:50px;height:50px;background:#d00;">
+				div3
+			</div>
+		</div>
+		<div class="item" indexaa="3" style="width:100px;height:100px;background:#dd0;">
+			div2
+			<div style="width:50px;height:50px;background:#d00;">
+				div3
+			</div>
+		</div>
+	</div>
+
+	<button onclick="addElement()">添加元素</button>
+	
+	<script src="plugins/jQuery/jquery-2.1.4.js"></script>
+	<script>
+		/* window.onload = function() {
+		 	var oBubble = document.getElementById("oBubble");
+		 	var oBubble1 = document.getElementById("oBubble1");
+		 	var oBubble2 = document.getElementById("oBubble2");
+		 	oBubble.onclick = function() {
+		 		alert("Bubble")
+		 	}
+		 	oBubble1.onclick = function() {
+		 		alert("Bubble1")
+		 	}
+		 	oBubble2.onclick = function() {
+		 		alert("Bubble2")
+		 	}
+		 }*/
+
+		 function  addElement () {
+		 	$("#test-01").prepend('<div class="item" indexaa="2" style="width:100px;height:100px;background:#dd0;">div2</div>');
+		 }
+
+		 $("#test-01").on('click', '.item', function(event) {
+		 	var element = this.closest('.item');
+		 	console.log(element);
+		 	console.log($(element).index());
+		 });
+	</script>
+</body>
+</html>

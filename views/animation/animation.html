@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<title>css3动画</title>
+	<style>
+		body{
+			overflow-x:hidden;
+		}
+		.hide{
+			display:none;
+		}
+		.page{
+			float:left;
+			width:100%;
+			height:100px;
+			position:absolute;
+			top:0px;
+			left:0px;
+		}
+		.animation_in{
+			position:relative;
+			animation:myfirst 0.5s;
+			-webkit-animation:myfirst 0.5s; /* Safari and Chrome */
+			display:block;
+			animation-fill-mode:forwards;
+		}
+
+		@keyframes myfirst{
+			0%   {left:100%;top:0px;}
+			100% {left:0px;top:0px;}
+		}
+
+		@-webkit-keyframes myfirst {/* Safari and Chrome */
+			0%   {left:100%;top:0px;}
+			100% {left:0px;top:0px;}
+		}
+
+		.animation_out{
+			position:relative;
+			animation:myLast 2s;
+			-webkit-animation:myfirst 2s; /* Safari and Chrome */
+		}
+
+		@keyframes myLast{
+			0%   {left:0px;top:0px;}
+			100% {left:-100%;top:0px;}
+		}
+
+		@-webkit-keyframes myLast {/* Safari and Chrome */
+			0%   {left:0px;top:0px;}
+			100% {left:-100%;top:0px;}
+		}
+		#home_01{
+			background:#ddd;
+		}
+		#home_02{
+			background:#dd0;
+		}
+		#home_03{
+			background:#d0d;
+		}
+		#home_04{
+			background:#0dd;
+		}
+		.button{
+			position:absolute;
+			bottom:0px;
+		}
+	</style>
+</head>
+<body>
+	<div id="home_01" class="page">
+		<div class="content">home_01</div>
+	</div>
+	<div id="home_02" class="page hide">
+		<div class="content">home_02</div>
+	</div>
+	<div id="home_03" class="page hide">
+		<div class="content">home_03</div>
+	</div>
+	<div id="home_04" class="page hide">
+		<div class="content">home_04</div>
+	</div>
+	<div class="button">
+		<button onclick="test('home_01')">home_01</button>
+		<button onclick="test('home_02')">home_02</button>
+		<button onclick="test('home_03')">home_03</button>
+		<button onclick="test('home_04')">home_04</button>
+	</div>
+</body>
+<script src="../../plugins/jQuery/jquery-2.1.4.js"></script>
+<script>
+	function test(pageId){
+		var jQpageId = "#" + pageId;
+		$(".page").removeClass('animation_in');
+		$(".page").addClass('hide');
+		$(jQpageId).removeClass("hide");
+		$(jQpageId).addClass("animation_in");
+		/*setTimeout(function() {
+			$(jQpageId).addClass("hide");
+		}, 2000);*/
+	}
+</script>
+</html>

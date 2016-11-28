@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>测试重复加载同一个js</title>
+	<style>
+		#test-bubbling{
+			background:#d00;
+			width:300px;
+		}
+		.test-bubbling-01{
+			background:#dd0;
+			width:200px;
+			height:200px;
+		}
+		.test-bubbling-02{
+			background:#d0d;
+			width:200px;
+			height:200px;
+		}
+		.test-bubbling-child{
+			background:#ddd;
+			width:100px;
+			height:100px;
+		}
+	</style>
+</head>
+<body>
+	<button onclick=testOne()>button</button>
+	<button id="aaa">idJQ绑定</button>
+	<button id="bbb">addEventListener</button>
+	<button id="ccc">id原生绑定</button>
+
+	<p>onclick 只能绑定全局事件</p>
+	<p>jQuery 绑定事件用的是三级事件addEventListener</p>
+	<p>onclick 后面的function会覆盖前面的</p>
+	<p>addEventListent 会把事件放到一个数组里 顺序执行</p>
+	<p>原生document.getElementById绑定后绑定的会覆盖前面绑定的</p>
+
+
+	<div id="test-bubbling">
+		父元素
+		<div class="test-bubbling-01">子元素01</div>
+		<div class="test-bubbling-02">子元素02
+			<div class="test-bubbling-child">子元素10</div>
+		</div>
+	</div>
+</body>
+
+<script src="plugins/jQuery/jquery-2.1.4.js"></script>
+<script>
+	function testOne (argument) {
+		console.log("全局");
+	}
+	document.getElementById('bbb').addEventListener("click", function  (argument) {
+		console.log("addEventListener01");
+	});
+	document.getElementById('bbb').addEventListener("click", function  (argument) {
+		console.log("addEventListener02");
+	});
+
+	//冒泡事件
+	$("#test-bubbling").on('click', function(event) {
+		console.log(event.target);
+	});
+	$("#test-bubbling").on('click', '.test-bubbling-02', function(event) {
+		console.log(event.target);
+	});
+	$("#test-bubbling").on('click', '.test-bubbling-child', function(event) {
+		console.log(event.target);
+		event.stopPropagation();  //组织冒泡
+	});
+</script>
+<script>
+	function  testOne (argument) {
+		console.log("覆盖全局");
+	}
+	(function (argument) {
+		console.log("一");
+		function  testOne (argument) {
+			console.log("第一遍");
+		}
+		$("#aaa").on('click', function(event) {
+			console.log("id第一遍");
+		});
+
+		document.getElementById('ccc').onclick = function  (argument) {
+			console.log("addEventListener01");
+		};
+	})()
+</script>
+<script>
+	+function (argument) {
+		console.log("二");
+		function  testOne (argument) {
+			console.log("第二遍");
+		}
+		$("#aaa").on('click', function(event) {
+			console.log("id第二遍");
+		});
+
+		document.getElementById('ccc').onclick =function  (argument) {
+			console.log("addEventListener02");
+		};
+	}()
+</script>
+</html>
