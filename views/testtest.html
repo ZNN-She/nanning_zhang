@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <div class="view ng-scope" ng-controller="adminTaskManageCtrl">
+        <div style="text-align:center;background:#f2c98e;" id="zeroClipContainer">
+            <div style="position:relative;text-align:center;background:#f2c98e;">
+                <img style="display:block;width:100%;" src="http://img.alicdn.com/imgextra/i1/78622573/TB2VOB2awxlpuFjSszbXXcSVpXa_!!78622573.jpg" alt="">
+                <div ng-click="zeroClipboardCopy()" style="position:absolute;left: 57.5%;top: 74.5%;width: 13.5%;height: 6%;cursor:pointer;" id="zero-clipboard">
+                </div>
+                <div style="position:absolute;left: 71%;top: 44%;width: 2%;height: 3%;cursor:pointer;background:red;" data-toggle="tooltip" data-placement="top" data-html="true" data-template="<div class='tooltip item-tooltip-warning' role='tooltip'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>" title="1.被邀好友从未订购过全能掌柜，或订购过全能掌柜但已过期30天以上
+                </br>
+                2.被邀好友通过邀请链接订购并登陆全能掌柜即为邀请成功
+                </br>
+                3.邀请成功后，联系全能掌柜在线客服领取短信奖励
+                </br>
+                4.多邀多送，上不封顶">
+                </div>
+            </div>
+            <img style="display:inline-block;" src="http://img.alicdn.com/imgextra/i1/78622573/TB22klJaNlmpuFjSZPfXXc9iXXa_!!78622573.jpg" alt="">
+        </div>
+        弹框
+        <div id="publish-active-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width:400px;text-align:center;">
+                    <div class="modal-header" style="background:#f29f27;">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                            <tton>
+                                <h4 class="modal-title" style="color:#fdf100;">
+                            复制成功
+                        </h4>
+                    </div>
+                    <div class="modal-body" style="background:#fef7db;color:#b8400b;">
+                        <div style="display:inline-block;font-size:18px;line-height:50px;">
+                            聊天时按住Ctrl+V就能分享给好友啦！
+                        </div>
+                        <div>
+                            （ 好友订购登陆后记得向客服领取短信哦~ ）
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="background:#fef7db;text-align:center;border-top:0px;">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" style="border:0px;border-top:0px;background:#fdaa32;color:#fff;width:120px;">确认
+                            <tton>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div>输入<input type="text" id="price-in"></div>
+    <div>输出<input type="text" id="price-out"></div>
+    <button id="price-btn">输出</button>
+
+    <span id="time">aa</span>
+    <!-- 第三方库 -->
+    <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
+    <script>
+    (function() {
+        var priceInEl = $("#price-in");
+        var priceOutEl = $("#price-out");
+        $("#price-btn").on("click", function(){
+            var price = priceInEl.val();
+
+            price = corrPrice(price);
+
+            priceOutEl.val(price);
+        })
+
+        function corrPrice(price){
+
+
+
+            return price;
+        }
+
+        function test(){
+            var href = window.locattion.href;
+            var index = href.indeOf("?");
+            var paramStr = href.subString(index+1);
+            var mapArr = paramStr.split("&");
+            var parameJson = {};
+            for(var i = 0; i < mapArr.length; i++){
+                var mapItemArr =mapArr[i].split("=");
+                parameJson[mapItemArr[0]] = mapItemArr[1];
+            };
+            return parameJson;
+        }
+
+        function correctPrice(price){
+            if(!price.toString().length){
+                return price;
+            }
+            var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+            if (reg.test(price)) {
+                return price;
+            } else {
+                price = price.replace(/[^(0-9)|\.]/g, "");
+                if(!price.length){
+                    return price;
+                }
+                var priceArr = price.split(".");
+                var intPart = priceArr[0];
+                var floatPart = priceArr[1].length ? "." + priceArr[1].substr(0,2) : "";
+                price = priceArr[0] + priceArr[1];
+                return price;
+            }
+            return price;
+        }
+    })();
+    </script>
+</body>
+
+</html>

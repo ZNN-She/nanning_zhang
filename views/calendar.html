@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" name="viewport" content="width=device-width, initial-scale=1">
+    <title>日历</title>
+    <style>
+    .snake-calendar {
+        position: relative;
+    }
+    
+    .calendar-inner {
+        width: 100%;
+    }
+    
+    .calendar-week-box {
+        box-sizing: border-box;
+        padding: 5px 0px;
+        background: #f3f2f2;
+        height: 30px;
+    }
+    
+    .week {
+        width: 14.285%;
+        text-align: center;
+        float: left;
+    }
+    
+    .calendar-day-box {
+        box-sizing: border-box;
+        padding: 5px 0px;
+        float: left;
+    }
+    
+    .calendar-day {
+        width: 14.285%;
+        text-align: center;
+        padding: 1px;
+        box-sizing: border-box;
+        float: left;
+    }
+    
+    .day-inner {
+        border: 1px solid rgba(0,0,0,0);
+    }
+    
+    .calendar-day.today .day-inner {
+        border: 1px solid #ddd;
+    }
+    
+    .calendar-day.hint .day-inner {
+        border: 1px solid green;
+    }
+    
+    .calendar-day.hint .festival {
+        color: red;
+    }
+    
+    .day {
+        height: 20px;
+        font-size: 14px;
+    }
+    
+    .hint {
+        font-size: 12px;
+        height: 10px;
+    }
+    
+    .festival {
+        font-size: 12px;
+        height: 14px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="snake-calendar">
+        <div class="calendar-inner">
+            <div class="calendar-week-box">
+                <div class="week week-Sun">日</div>
+                <div class="week week-Mon">一</div>
+                <div class="week week-Tuse">二</div>
+                <div class="week week-Wed">三</div>
+                <div class="week week-Thurs">四</div>
+                <div class="week week-Fri">五</div>
+                <div class="week week-Sat">六</div>
+            </div>
+            <div id="calendar-day-box" class="calendar-day-box">
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../plugins/jQuery/jquery.js"></script>
+<script ype="text/javascript">
+(function(window) {
+    var MONTH_DAY = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    var CALENDAR = $("#calendar-day-box");
+
+    var MODEL = '<div class="{{day-status}}">' + '<div class="day-inner">' + '<div class="hint">{{hint}}</div>' + '<div class="day">{{day}}</div>' + '<div class="festival">{{festival}}</div>' + '</div>' + '</div>';
+
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var today = date.getDate();
+    var week = date.getDay();
+
+    if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0)) {
+        MONTH_DAY[1] = 29;
+    }
+
+    for (var i = 0; i <= week; i++) {
+        var model = MODEL.replace("{{hint}}", "");
+        model = model.replace("{{day}}", "");
+        model = model.replace("{{festival}}", "");
+        model = model.replace("{{day-status}}", "calendar-day");
+        CALENDAR.append(model);
+    }
+    for (var i = 1; i <= MONTH_DAY[month]; i++) {
+
+
+        if (today == i) {
+            var model = MODEL.replace("{{hint}}", "");
+            model = model.replace("{{day}}", i);
+            model = model.replace("{{festival}}", "");
+            model = model.replace("{{day-status}}", "calendar-day today");
+            
+        } else if (today == 15 || today == 5) { //测试
+            var model = MODEL.replace("{{hint}}", "");
+            model = model.replace("{{day}}", i);
+            model = model.replace("{{festival}}", "笔记");
+            model = model.replace("{{day-status}}", "calendar-day hint");
+            
+        } else {
+            var model = MODEL.replace("{{hint}}", "");
+            model = model.replace("{{day}}", i);
+            model = model.replace("{{festival}}", "");
+            model = model.replace("{{day-status}}", "calendar-day");
+        }
+        CALENDAR.append(model);
+    }
+})(window);
+</script>
+
+</html>

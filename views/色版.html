@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>色版</title>
+	<link rel="stylesheet" type="text/css" href="../plugins/jq_bg/css/jquery.bigcolorpicker.css"></head>
+</head>
+<body>
+	<input type="text" value="" name="textbatch"/>
+	<input type="text" value="" name="textbatch"/>
+	
+	<script type="text/javascript" src="../plugins/jQuery/jquery-2.1.4.js"></script>
+	<script type="text/javascript" src="../plugins/jq_bg/js/jquery.bigcolorpicker.js"></script>
+	<script>
+		$(function(){
+		    $(":input[name='textbatch']").bigColorpicker(function(el,color){
+		        $(el).val(color);
+		    }); 
+		})
+	</script>
+</body>
+</html>

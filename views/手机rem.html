@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, ">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>标题</title>
+    <style>
+    .content {
+        font-size: 20px;
+        padding: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        1.会员等级全新上线，交易越多，看到的资讯越多；报告前瞻、策略周报指导规避价格风险。
+        <br>2.新版资讯频道优化改版，国际国内市场变动第一时间掌握，独家观点保驾护航。
+        <br>3.修复bug和提升用户体验
+        <br>
+    </div>
+    <script>
+    // =========================PhoneGap================================== 
+    // 等待加载PhoneGap 
+    document.addEventListener("deviceready", onDeviceReady, false);
+    // PhoneGap加载完毕 
+    function onDeviceReady() {
+        // 按钮事件 
+        document.addEventListener("backbutton", eventBackButton, false); // 返回键 
+
+    }
+
+    // 返回键 
+    function eventBackButton() {
+        if ($(".classobj").is(":visible")) {
+            alert('再点击一次退出!');
+            document.removeEventListener("backbutton", eventBackButton, false); // 注销返回键 
+            document.addEventListener("backbutton", exitApp, false); //绑定退出事件 
+            // 3秒后重新注册 
+            var intervalID = window.setInterval(function() {
+                window.clearInterval(intervalID);
+                document.removeEventListener("backbutton", exitApp, false); // 注销返回键 
+                document.addEventListener("backbutton", eventBackButton, false); // 返回键 
+            }, 3000);
+        } else {
+            //navigator.app.backHistory(); 
+
+        }
+
+    }
+
+    function exitApp() {
+        navigator.app.exitApp();
+    }
+    </script>
+</body>
+
+</html>

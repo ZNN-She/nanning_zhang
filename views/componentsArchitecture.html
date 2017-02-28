@@ -1,0 +1,46 @@
+332<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery插件结构</title>
+</head>
+
+<body>
+    <script type="text/javascript" src="../plugins/jQuery/jquery-2.1.4.js"></script>
+
+    <script>
+    +(function($) {
+
+        function _getOption(options) {
+            console.log(this);
+            // return $.$.extend({}, this.DEFAULT, options);
+
+        }
+
+        var ComponentTest = function(options) {
+            this.options = _getOption(options);
+        }
+        ComponentTest.DEFAULT = {
+        	id:"111"
+        }
+
+        ComponentTest.prototype = {
+
+        }
+        $.fn.ComponentTest = ComponentTest;
+    })(jQuery);
+    </script>
+
+    <script>
+   
+    		$("eee").ComponentTest();
+
+    
+
+
+
+    </script>
+</body>
+
+</html>

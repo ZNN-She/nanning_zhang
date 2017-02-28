@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		.clearfix:before, .clearfix:after{
+			display: table;
+		    content: "";
+		    line-height: 0;
+		}
+		.recommand-a rea{
+			width:1200px;
+		}
+		.recommand-area *{
+			box-sizing:border-box;
+		}
+		.recommand-title{
+			padding: 10px 0;
+			line-height: 20px;
+		}
+		.list-cat-recommand-list{
+			margin: 10px 0;
+		}
+		.list-cat-recommand-list ul{
+			list-style-type: none;
+		}
+		.list-cat-recommand-list ul li.recommand-ite{
+			border: 1px solid #eeeeee;
+		    width: 220px;
+		    height: 268px;
+		    position: relative;
+		    font-size: 14px;
+		    margin-left: 25px;
+		    float: left;
+		    overflow: hidden;
+		    display: inline-block;
+		}
+		.service-about{
+	    	text-align: center;
+		    height: 188px;
+		    color: #333333;
+	    }
+	</style>
+</head>
+<body>
+	<div class="recommand-area">
+		<div class="recommand-title clearfix">
+			精选服务
+		</div>
+		<div class="list-cat-recommand-list">
+			<div class="recommand-item" >
+				<div class="service-about"></div>
+				<div class="service-hover" style="position:absolute"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

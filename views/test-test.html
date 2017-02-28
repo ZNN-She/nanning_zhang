@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>测试测试</title>
+</head>
+<input type="text" id="username">
+<input type="text" id="passward">
+<button id="log-in"></button>
+
+<body>
+    <script type="text/javascript" src="../plugins/jQuery/jquery.js"></script>
+    <script>
+    +(function() {
+        var _username = $("#username").val();
+        var _passwaed = $("#passward").val();
+
+        $("#log-in").on("click", function() {
+            // body...
+            _username = $("#username").val();
+            _passwaed = $("#passward").val();
+
+            if (!_username.length) {
+                alert("名字不能不空!");
+                return;
+            }
+            if (!_passwaed.length) {
+                alert("名字不能不空!");
+                return;
+            }
+            $.ajax({
+                url: '/path/to/file',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    username: _username,
+                    passward: _passwaed
+                },
+                success: function(data) {
+                	console.log(data);
+                    // body...
+                    if (data.status == 1) {
+                        //这里写登陆成功的代码
+                    } else {
+                        alert("登录失败！");
+                    }
+                },
+                error: function() {
+                    // body...
+                    alert("接口失败也可以提示登录失败");
+                }
+            });
+
+        })
+
+
+        $.ajax({
+            url: '/path/to/file',
+            type: 'POST',
+            dataType: 'JSON',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                MemberDTO: 13372788976
+            },
+            success: function(data) {
+                // body...
+            },
+            error: function(data) {
+                // body...
+            }
+        });
+    })();
+    </script>
+</body>
+
+</html>

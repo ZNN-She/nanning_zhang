@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>call_apply</title>
+</head>
+
+<body>
+    <script>
+    function log() {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift('(app)');
+
+        console.log.apply(console, args);
+    };
+
+    log("hello","world","hello world");
+    </script>
+</body>
+
+</html>

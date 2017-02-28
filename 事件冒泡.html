@@ -33,7 +33,7 @@
 		</div>
 		<div class="item" indexaa="3" style="width:100px;height:100px;background:#dd0;">
 			div2
-			<div style="width:50px;height:50px;background:#d00;">
+			<div class="item-inner" style="width:50px;height:50px;background:#d00;">
 				div3
 			</div>
 		</div>
@@ -43,11 +43,12 @@
 	
 	<script src="plugins/jQuery/jquery-2.1.4.js"></script>
 	<script>
-		/* window.onload = function() {
+		 window.onload = function() {
 		 	var oBubble = document.getElementById("oBubble");
 		 	var oBubble1 = document.getElementById("oBubble1");
 		 	var oBubble2 = document.getElementById("oBubble2");
 		 	oBubble.onclick = function() {
+		 		this
 		 		alert("Bubble")
 		 	}
 		 	oBubble1.onclick = function() {
@@ -56,14 +57,14 @@
 		 	oBubble2.onclick = function() {
 		 		alert("Bubble2")
 		 	}
-		 }*/
+		 }
 
 		 function  addElement () {
 		 	$("#test-01").prepend('<div class="item" indexaa="2" style="width:100px;height:100px;background:#dd0;">div2</div>');
 		 }
 
 		 $("#test-01").on('click', '.item', function(event) {
-		 	var element = this.closest('.item');
+		 	var element = this.closest('.item-inner');
 		 	console.log(element);
 		 	console.log($(element).index());
 		 });
