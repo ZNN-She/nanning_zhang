@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        new Obj/调用函数/this
+    </title>
+</head>
+
+<body>
+    <script>
+    var x = 10;
+
+    function func() {
+        console.log(this.x);
+    }
+    var obj = {
+        x: 20,
+        fn: function() {
+            console.log(this.x);
+        }
+    }
+    var fn = obj.fn
+    func() // 10
+    fn() // 10
+        //最终输出的都是全局的 10。永远记住这一点：判断 this 指向谁，看执行时而非定义时，只要函数(function)没有绑定在对象上调用，它的 this 就是 window。
+        //非函数内直接使用 var 声明的变量默认为全局变量，且默认挂在 window 上作为属性。
+        //一个问题，如果我们忘记使用new命令来调用构造函数，直接调用构造函数了，会发生什么？
+
+    // 　　这种情况下，构造函数就变成了普通函数，并不会生成实例对象。而且由于后面会说到的原因，this这时代表全局对象，将造成一些意想不到的结果。
+    //由于在严格模式中，函数内部的this不能指向全局对象。如果指向了全局，this默认等于undefined，导致不加new调用会报错
+
+
+    // 在构造函数内部判断是否使用new命令，如果发现没有使用，则直接返回一个实例对象。
+    function Person(name, height) {
+        if (!(this instanceof Person)) {
+            return new Person(name, height);
+        }
+        this.name = name;
+        this.height = height;
+    }
+    var boy = Person('Keith');
+    console.log(boy.name) //'Keith'
+    //上面代码中的构造函数，不管加不加new命令，都会得到同样的结果。
+    //如果构造函数内部有return语句，而且return后面跟着一个复杂数据类型（对象，数组等），new命令会返回return语句指定的对象；如果return语句后面跟着一个简单数据类型（字符串，布尔值，数字等），则会忽略return语句，返回this对象。
+    //另一方面，如果对普通函数（内部没有this关键字的函数）使用new命令，则会返回一个空对象。
+    //new命令总是返回一个对象，要么是实例对象，要么是return语句指定的对象或数组
+
+
+	//是在构造函数内部判断是否使用new命令，如果发现没有使用，则直接返回一个实例对象。
+
+     function Person(name, height) {
+     if (!(this instanceof Person)) {
+             return new Person(name, height);
+         }
+         this.name = name;
+         this.height = height;
+     }
+     var boy = Person('Keith');
+     console.log(boy.name) //'Keith'
+　　//上面代码中的构造函数，不管加不加new命令，都会得到同样的结果。
+    </script>
+</body>
+
+</html>

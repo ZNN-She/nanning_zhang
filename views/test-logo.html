@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- viewport  手机页面要设置 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+    <title>登陆</title>
+    <style>
+        #inner *{
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body style="overflow: hidden;">
+    <!-- form的action是提交的路径  input里的name属性 就是参数名子 -->
+    <div>
+        <form id="login-form" action="url">
+            用户名：
+            <input id="login-user" name="user" type="text"> 密码：
+            <input id="login-password" name="password" type="password">
+        </form>
+        <button id="login">登陆表单提交</button>
+    </div>
+    <div>
+        用户名：
+        <input id="login-user02" name="user" type="text"> 密码：
+        <input id="login-password02" name="password" type="password">
+        <button id="login">登陆ajax提交</button>
+    </div>
+
+    <!-- 第三方库 -->
+    <script src="plugins/jQuery/jquery-2.1.4.js"></script>
+    <script>
+    + function(window) { //闭包防止全局污染
+        //表单
+        document.getElementById("login").onclick = function login() {
+                var user = document.getElementById("login-user").value; //获取input值
+                if (user.length == 0) { //验证
+                    alert("用户名不能为空！")
+                } else {
+                    // alert(user);
+                    console.log(user); //打印  f12打开控制台可以看
+                    document.getElementById("login-form").submit(); //验证通过 提交
+                }
+
+            }
+            //ajax
+        document.getElementById("login").onclick = function login() {
+            var user = document.getElementById("login-user02").value; //获取input值
+            var password = document.getElementById("login-password02").value; //获取input值
+            if (user.length == 0) { //验证
+                alert("用户名不能为空！")
+            } else {
+                // alert(user);
+                console.log(user); //打印  f12打开控制台可以看
+                $.$.ajax({
+                        url: '/path/to/file', //提交路径
+                        type: 'POST',  //请求类型
+                        dataType: 'json',
+                        contentType: "application/json; charset=utf-8", //这两个是请求方式 请求方式 常用的三种：表单(formData) queryString paylaod  
+                        headers: {'Content-Type': 'application/json'}, //{'Content-Type': 'application/json'},   {'Content-Type': 'application/x-www-form-urlencoded'}
+                        data: {  //参数
+                            user: user,
+                            password:password
+                        },
+                        success:function (argument) {
+                            alert("成功");
+                        },
+                        error:function (argument) {
+                            alert("失败");
+                        }
+                    });
+
+            }
+
+        }
+    }(window);
+    </script>
+</body>
+
+</html>

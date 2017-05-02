@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>分页</title>
+    <style>
+    .snake-pagination {
+        display: block;
+        font-size: 0px;
+    }
+    
+    .pagination {
+        display: inline-block;
+        padding: 0;
+        font-size: 0;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+    }
+    
+    .pagination >li {
+        display: inline-block;
+        list-style-type: none;
+        font-size: 14px;
+        line-height: 30px;
+    }
+    
+    .pagination >li:last-child a {
+        border: 0;
+    }
+    
+    .pagination >li:last-child a:focus,
+    .pagination >li:first-child a:focus {
+        background: #fff;
+    }
+    
+    .pagination >li:last-child a:active,
+    .pagination >li:first-child a:active {
+        background: #ddd;
+    }
+    
+    .pagination >li a:hover {
+        background: #eee;
+    }
+    
+    .pagination >li a:focus {
+        background: #ddd;
+    }
+    
+    .pagination >li a {
+        display: inline-block;
+        color: #222;
+        text-decoration: none;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        border-right: 1px solid #ddd;
+        cursor: pointer;
+    }
+    
+    .pagination >li a.active {
+        background: #ddd;
+    }
+    
+    .snake-pagination select {
+        height: 32px;
+        border-color: #ddd;
+        border-radius: 3px;
+        vertical-align: top;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    
+    .pagination-size {
+        display: inline-flex;
+        background: #ddd;
+        vertical-align: top;
+        line-height: 30px;
+        border-radius: 3px;
+        margin-left: 10px;
+    }
+    
+    .pagination-size input {
+        width: 40px;
+        line-height: 30px;
+        padding: 0;
+        border: 1px solid #ddd;
+    }
+    
+    .pagination-size .go {
+        font-size: 14px;
+        cursor: pointer;
+        padding: 0 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="snake-pagination">
+        <select>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+        </select>
+        <ul class="pagination">
+            <li class="prev">
+                <a href="#">
+                    <<</a>
+            </li>
+            <li class="page"><a href="#">1</a></li>
+            <li class="page"><a href="#">2</a></li>
+            <li class="page"><a href="#">3</a></li>
+            <li class="page"><a href="#">4</a></li>
+            <li class="page"><a href="#">5</a></li>
+            <li class="next"><a href="#">>></a></li>
+        </ul>
+        <span class="pagination-size">
+        	<input type="text">
+        	<span class="go">go</span>
+        </span>
+    </div>
+    <div class="snake-pagination" data-snake="pagination" data-page="1" data-count="1225" data-size="100">
+    </div>
+    <div id="pagination2" class="snake-pagination">
+    </div>
+    <button id="btn">第五页</button>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+    (function($) {
+        function Pagination(ele, option) {
+            this.$ele = $(ele);
+            this.page = option.page;
+            this.size = option.size;
+            this.count = option.count;
+            this.pageNumber = parseInt(this.count % this.size) ? parseInt(this.count / this.size) + 1 : parseInt(this.count / this.size);
+            this.clickFn = option.clickFn;
+            this.options = option;
+            this.init();
+        }
+        Pagination.DEFAULTS = {
+            page: 1,
+            size: 10,
+            count: 0,
+            showSize: true,
+            showPage: true,
+            clickFn: function(page, size, count) {
+                console.log(page, size, count);
+            }
+        };
+        Pagination.prototype.init = function() {
+            this.clearEleContent();
+            this.createPagination();
+            this.clearEleEvent();
+            this.initEvent();
+            this.toggle();
+        };
+        Pagination.prototype.initEvent = function() {
+            var self = this;
+            self.$ele.on("click.snake.pagination", ".page", function(e) {
+                self.$ele.find('a').removeClass('active');
+                self.page = parseInt($(e.target).text());
+                self.toggle();
+            });
+            self.$ele.on("click.snake.pagination", ".prev", function(e) {
+                self.$ele.find('a').removeClass('active');
+                self.page = self.page > 1 ? --self.page : self.page;
+                self.toggle();
+            });
+            self.$ele.on("click.snake.pagination", ".next", function(e) {
+                self.$ele.find('a').removeClass('active');
+                self.page = (self.page < self.pageNumber) ? ++self.page : self.page;
+                self.toggle();
+            });
+            self.$ele.on("change.snake.pagination", "select", function(e) {
+                self.size = self.options.size = parseInt($(e.target).val());
+                self.pageNumber = parseInt(self.count % self.size) ? parseInt(self.count / self.size) + 1 : parseInt(self.count / self.size);
+                self.clearEleContent();
+                self.createPagination();
+            });
+            self.$ele.on("click.snake.pagination", ".go", function(e) {
+                self.toggle(parseInt($(e.target).siblings("input").val()));
+            });
+        };
+        Pagination.prototype.toggle = function(page) {
+            var self = this;
+            self.page = !page ? self.page : page < 0 ? 1 : page > self.pageNumber ? self.pageNumber : page;
+            self.$ele.find('a').removeClass('active');
+            self.$ele.find('a').eq(parseInt(self.page)).addClass('active');
+            self.$ele.find("input").val("");
+            self.clickFn(self.page, self.size, self.count);
+        };
+        //生成html并append到页面上
+        Pagination.prototype.createPagination = function() {
+            var self = this;
+            var paginationInnerHtmlStr = _createPaginationPrev();
+            for (var i = 0; i < self.pageNumber; i++) {
+                paginationInnerHtmlStr += _createPaginationInner().replace("{{page}}", i + 1);;
+            }
+            paginationInnerHtmlStr += _createPaginationNext();
+            if (self.options.showSize) {
+                self.$ele.eq(0).append($(_createSelectSize()));
+                self.$ele.find('select').val(self.size);
+            }
+            self.$ele.eq(0).append($(_createPaginationContainer()).append($(paginationInnerHtmlStr)));
+            if (self.options.showPage) self.$ele.eq(0).append($(_creatGoPage()));
+        };
+
+        Pagination.prototype.clearEleContent = function() {
+            var self = this;
+            self.$ele.children().remove();
+        };
+        Pagination.prototype.clearEleEvent = function() {
+            var self = this;
+            self.$ele.off("click.snake.pagination");
+            self.$ele.off("change.snake.pagination");
+        }
+
+        function _createPaginationContainer() {
+            var htmlStr = '<ul class="pagination"></ul>';
+            return htmlStr;
+        }
+
+        function _createPaginationInner() {
+            var htmlStr = '<li class="page"><a href="#">{{page}}</a></li>';
+            return htmlStr;
+        }
+
+        function _createPaginationPrev() {
+            var htmlStr = '<li class="prev"><a href="#"><<</a></li>';
+
+            return htmlStr;
+        }
+
+        function _createPaginationNext() {
+            var htmlStr = '<li class="next"><a href="#">>></a></li>';
+            return htmlStr;
+        }
+
+        function _createSelectSize() {
+            var htmlStr = '<select>' + '<option value="5">5</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="50">50</option>' + '<option value="100">100</option>' + '<option value="200">200</option>' + '<option value="500">500</option>' + '</select>';
+            return htmlStr;
+        }
+
+        function _creatGoPage() {
+            var htmlStr = '<span class="pagination-size">' + '<input type="text">' + '<span class="go">go</span>' + '</span>';
+            return htmlStr;
+        }
+
+        function Plugin(option) {
+            return this.each(function() {
+                var $this = $(this);
+                var data = $(this).data("snake.pagination");
+                var options = $.extend(true, {}, $.extend(Pagination.DEFAULTS), $this.data(), typeof option == 'object' && option);
+
+                if (typeof option == "number") {
+                    options.size = data.size;
+                    options.page = option;
+                    options.count = data.count;
+                } else {
+                    options.size = options.size || data.size || 10;
+                    options.page = options.page || data.page || 0;
+                    options.count = options.count || data.count || 0;
+                }
+                if (!data || data.size != options.size || data.count != options.count) {
+                    $this.data("snake.pagination", (data = new Pagination(this, options)));
+                }
+                if (typeof option == "string") {
+                    data[option]();
+                } else if (typeof option == "number") {
+                    options.page = option;
+                    data.toggle(option);
+                }
+            });
+        }
+
+
+        $.fn.pagination = Plugin;
+        $.fn.pagination.Constructor = Pagination
+        $(window).on("load", function(e) {
+            $("[data-snake='pagination']").each(function() {
+                Plugin.call($(this), $(this).data());
+            });
+        });
+    })(jQuery)
+    </script>
+    <script>
+    $("#pagination2").pagination({
+        page: 1,
+        size: 20,
+        count: 300
+    });
+    $("#btn").on("click", function() {
+        $("#pagination2").pagination(5);
+    });
+    </script>
+</body>
+
+</html>

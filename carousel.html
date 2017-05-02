@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        轮播
+    </title>
+    <style>
+    .carousel {
+        height: 400px;
+        position: relative;
+        border: 1px solid #ddd;
+        overflow: hidden;
+    }
+    
+    .carousel-inner,
+    .carousel-content {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .carousel-content-item {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        line-height: 400px;
+        text-align: center;
+        font-size: 50px;
+        display: none;
+    }
+    
+    @keyframes nextShow {
+        0% {
+            left: 100%;
+        }
+        100% {
+            left: 0;
+        }
+    }
+    
+    @-webkit-keyframes nextShow {
+        0% {
+            left: 100%;
+        }
+        100% {
+            left: 0;
+        }
+    }
+    
+    @keyframes nextHide {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -100%;
+        }
+    }
+    
+    @-webkit-keyframes nextHide {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: -100%;
+        }
+    }
+    
+    @keyframes prevShow {
+        0% {
+            left: -100%;
+        }
+        100% {
+            left: 0;
+        }
+    }
+    
+    @-webkit-keyframes prevShow {
+        0% {
+            left: -100%;
+        }
+        100% {
+            left: 0;
+        }
+    }
+    
+    @keyframes prevHide {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+    
+    @-webkit-keyframes prevHide {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+    
+    .carousel-content-item.active {
+        display: block;
+    }
+    
+    .carousel-content-item.next-show {
+        animation: nextShow 1s;
+        -webkit-animation: nextShow 1s;
+    }
+    
+    .carousel-content-item.next-hide {
+        animation: nextHide 1s;
+        -webkit-animation: nextHide 1s;
+    }
+    
+    .carousel-content-item.prev-show {
+        animation: prevShow 1s;
+        -webkit-animation: prevShow 1s;
+    }
+    
+    .carousel-content-item.prev-hide {
+        animation: prevHide 1s;
+        -webkit-animation: prevHide 1s;
+    }
+    
+    .carousel-arrows {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        margin-top: -15px;
+        border: 3px solid #aaa;
+    }
+    
+    .carousel-arrows.carousel-arrows-next {
+        border-bottom: 0;
+        border-left: 0;
+        right: 10px;
+        transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
+    
+    .carousel-arrows.carousel-arrows-prev {
+        border-bottom: 0;
+        border-right: 0;
+        left: 10px;
+        transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+    }
+    
+    .carousel-slide {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .carousel-slide-item {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+        background: #ddd;
+        border: 1px solid #999;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    
+    .carousel-slide-item.active {
+        background: #999;
+    }
+    </style>
+</head>
+
+<body>
+    <div style="width: 800px;margin: 0 auto;">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-content">
+                    <div class="carousel-content-item active" style="background: #ddd;">1</div>
+                    <div class="carousel-content-item" style="background: #dd0;">2</div>
+                    <div class="carousel-content-item" style="background: #d00;">3</div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-slide-item active"></div>
+                    <div class="carousel-slide-item"></div>
+                    <div class="carousel-slide-item"></div>
+                </div>
+                <div class="carousel-arrows carousel-arrows-next"></div>
+                <div class="carousel-arrows carousel-arrows-prev"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 第二个 -->
+    <div style="width: 800px;margin: 0 auto;">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-content">
+                    <div class="carousel-content-item active" style="background: #ddd;">1</div>
+                    <div class="carousel-content-item" style="background: #dd0;">2</div>
+                    <div class="carousel-content-item" style="background: #d00;">3</div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-slide-item active"></div>
+                    <div class="carousel-slide-item"></div>
+                    <div class="carousel-slide-item"></div>
+                </div>
+                <div class="carousel-arrows carousel-arrows-next"></div>
+                <div class="carousel-arrows carousel-arrows-prev"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+    (function($) {
+        Carousel = function Carousel(ele) {
+            this.isCarousel = false;
+            this.eleNum = ele.find(".carousel-content-item").length;
+            this.init(ele);
+            this.loop(ele);
+        }
+        Carousel.prototype.init = function(ele) {
+            var self = this;
+            ele.on("click", ".carousel-arrows-next", function(event) {
+                self.next(ele);
+            })
+            ele.on("click", ".carousel-arrows-prev", function(event) {
+                self.prev(ele);
+            })
+            ele.on("click", ".carousel-slide", function(event) {
+                if (self.isCarousel) {
+                    return;
+                }
+                self.isCarousel = true;
+                var slideIndex = $(event.target).index();
+                var showIndex = ele.find('.carousel-content-item.active').index();
+                var isNext = slideIndex > showIndex;
+                _nextShow(self, ele, showIndex, slideIndex, isNext);
+            })
+        }
+        Carousel.prototype.next = function(ele) {
+            var self = this;
+            if (self.isCarousel) {
+                return;
+            }
+            self.isCarousel = true;
+            var showIndex = ele.find('.carousel-content-item.active').index();
+            var nextIndex = showIndex + 1 > self.eleNum - 1 ? 0 : showIndex + 1;;
+            _nextShow(self, ele, showIndex, nextIndex, true);
+        }
+        Carousel.prototype.prev = function(ele) {
+            var self = this;
+            if (self.isCarousel) {
+                return;
+            }
+            self.isCarousel = true;
+            var showIndex = ele.find('.carousel-content-item.active').index();
+            var nextIndex = showIndex - 1 < 0 ? self.eleNum - 1 : showIndex - 1;
+            _nextShow(self ,ele, showIndex, nextIndex, false);
+        }
+        Carousel.prototype.loop = function(ele) {
+            var self = this;
+            setTimeout(function() {
+                self.next(ele);
+                self.loop(ele);
+            }, 3000);
+        }
+
+        function _nextShow(self, ele, showIndex, nextIndex, isNext) {
+            if (isNext) {
+                ele.find('.carousel-content-item').eq(showIndex).addClass('next-hide');
+                ele.find('.carousel-content-item').eq(nextIndex).addClass('active next-show');
+            }else{
+                ele.find('.carousel-content-item').eq(showIndex).addClass('prev-hide');
+                ele.find('.carousel-content-item').eq(nextIndex).addClass('active prev-show');
+            }
+            setTimeout(function() {
+                ele.find('.carousel-content-item').eq(showIndex).removeClass('active');
+                ele.find('.carousel-content-item').removeClass('prev-show');
+                ele.find('.carousel-content-item').removeClass('next-show');
+                ele.find('.carousel-content-item').removeClass('prev-hide');
+                ele.find('.carousel-content-item').removeClass('next-hide');
+                self.isCarousel = false;
+            }, 1000);
+            ele.find('.carousel-slide-item').removeClass('active').eq(nextIndex).addClass('active');
+        }
+
+        var CAROUSEL_ELE = $(".carousel");
+        for (var i = 0; i < CAROUSEL_ELE.length; i++) {
+            new Carousel($(CAROUSEL_ELE[i]));
+        }
+    })(jQuery)
+    </script>
+</body>
+
+</html>

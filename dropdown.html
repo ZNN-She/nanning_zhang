@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>下拉菜单</title>
+    <style>
+    [data-snake="select"] {
+        min-width: 100px;
+        height: 30px;
+        font-size: 18px;
+        /*border-radius: 5px;*/
+    }
+    </style>
+    <style>
+    .snake-drop {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .snake-drop .snake-drop-btn {
+        padding: 5px;
+        font-size: 20px;
+        background: #fff;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    
+    .snake-drop .caret {}
+    
+    .snake-drop .snake-drop-menu {
+        display: none;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        border: 1px solid #ddd;
+        box-shadow: 0px 8px 8px 1px #ddd;
+    }
+    
+    .snake-drop-hover .snake-drop-menu {
+        display: block;
+    }
+    
+    .snake-drop .snake-drop-menu li {
+        list-style-type: none;
+        line-height: 25px;
+        cursor: pointer;
+        padding: 5px 20px 5px 10px;
+    }
+    
+    .snake-drop .snake-drop-menu li:hover {
+        background: #ddd;
+    }
+    
+    .snake-drop.down {}
+    
+    .snake-drop.up {}
+    
+    .snake-drop.down .caret {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 2px;
+        vertical-align: middle;
+        border-top: 4px dashed;
+        border-top: 4px solid\9;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+    }
+    
+    .snake-drop.up .caret {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 2px;
+        vertical-align: middle;
+        border-top: 0;
+        border-bottom: 4px dashed;
+        border-bottom: 4px solid\9;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+    }
+    
+    .snake-drop.dowm .snake-drop-menu {
+        top: 100%;
+    }
+    
+    .snake-drop.up .snake-drop-menu {
+        bottom: 100%;
+        box-shadow: 0px -8px 8px 1px #ddd;
+    }
+    </style>
+</head>
+
+<body>
+    <select data-snake="select" name="select" id="select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+    </select>
+    <div id="select-value"></div>
+    <div id="dropdown" style="margin-top: 200px;">
+        <div class="snake-drop down" id="snake-dropdown" data-snake="drop">
+            <button class="snake-drop-btn">
+                <span class="snake-drop-text">drop1</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="snake-drop-menu">
+                <li>drop1</li>
+                <li>drop2</li>
+                <li>drop3</li>
+                <li>drop4</li>
+                <li>drop5</li>
+            </ul>
+        </div>
+        <div class="snake-drop up" data-snake="drop">
+            <button class="snake-drop-btn">
+                <span class="snake-drop-text">drop1</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="snake-drop-menu">
+                <li data-value="drop1">drop1</li>
+                <li data-value="drop2">drop2</li>
+                <li data-value="drop3">drop3</li>
+                <li data-value="drop4">drop4</li>
+                <li data-value="drop5">drop5</li>
+            </ul>
+        </div>
+    </div>
+    <button id="btn">show</button>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+    $("[data-snake='select']").on("change", function(e) {
+        console.log(e.target.value);
+        $("#select-value").html(e.target.value);
+    })
+    </script>
+    <script>
+    (function($) {
+
+        function Drop(ele, option) {
+            this.$ele = $(ele);
+            if (option.switchBefore) this.switchBefore = option.switchBefore;
+            if (option.switchAfter) this.switchAfter = option.switchAfter;
+            this.init();
+        }
+
+        Drop.DEFAULTS = {
+            switchBefore: null,
+            switchAfter: null
+        }
+
+        Drop.prototype.init = function() {
+            var self = this;
+            self.$ele.on("click.dropmenu", ".snake-drop-menu li", $.proxy(function(e) {
+                if (!self.switchBefore()) return;
+                self.$ele.find(".snake-drop-text").html($(e.target).html())
+                self.hideMenu();
+                self.switchAfter();
+            }, self));
+            self.$ele.hover(function(e) {
+                self.showMenu();
+            }, function(e) {
+                self.hideMenu();
+            })
+        }
+
+        Drop.prototype.showMenu = function(){
+        	this.$ele.addClass('snake-drop-hover');
+        }
+        Drop.prototype.hideMenu = function(){
+        	this.$ele.removeClass('snake-drop-hover');
+        }
+
+        Drop.prototype.switchBefore = function() {
+            console.log("before");
+            return true;  //返回false 不会改变  返回真改变
+        }
+        Drop.prototype.switchAfter = function() {
+            console.log("after");
+            return true;
+        }
+
+      
+
+        function Plugin(option) {
+            return this.each(function() {
+                var $this = $(this);
+                var data = $this.data("data.drop");
+                var options = $.extend({}, Drop.DEFAULTS, $this.data(), typeof option == 'object' && option);
+
+                if (!data) $this.data("data.drop", (data = new Drop(this, options)));
+                if(typeof option=="string"){
+                    data[option]();
+                }
+            });
+        }
+
+        $.fn.snakeDrop = Plugin;
+
+        $(window).on("load", function(e) {
+            $("[data-snake='drop']").each(function() {
+                Plugin.call($(this), $(this).data());
+            })
+        })
+    })(jQuery);
+    </script>
+    <script>
+    var option = {
+        switchBefore: function() {
+            console.log($(this));
+            return true;  //返回false 不会改变  返回真改变
+        }
+    }
+
+  	var instance = $('#snake-dropdown').snakeDrop().data("data.drop");
+    $("#btn").on("click", function(){
+    	instance.showMenu();
+    })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>progress</title>
+    <style>
+    .progress {
+        height: 20px;
+        width: 100%;
+        border: 1px solid #ddd;
+        background: #fff;
+    }
+    
+    .progress-bar {
+        height: 20px;
+        background: #dd0;
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="progress" data-snake="progress" data-progress="10">
+        <div class="progress-bar" style="width: 0%;">
+            <span class="progress-number">0</span>%
+        </div>
+    </div>
+    <div id="progress" class="progress" data-snake="progress">
+        <div class="progress-bar" style="width: 0%;">
+            <span class="progress-number">0</span>%
+        </div>
+    </div>
+    <button id="test-btn">增加</button>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+    (function($) {
+
+        function Progress(ele, option) {
+            this.$ele = $(ele);
+            this.progress = option.progress || 0;
+            this.init();
+        }
+        Progress.DEFAULTS = {
+            progress: 0
+        };
+        Progress.prototype.init = function() {
+            var self = this;
+            this.updataProgress(Number(self.progress));
+        };
+        Progress.prototype.updataProgress = function(progress) {
+            var self = this;
+            self.$ele.find('.progress-bar').animate({
+                width: progress + "%"
+            });
+            self.$ele.find(".progress-number").text(progress);
+        }
+
+        function Plugin(option) {
+            return this.each(function() {
+                var $this = $(this);
+                var data = $(this).data("snake.progress");
+                var options = $.extend({}, $.extend(Progress.DEFAULTS), $this.data(), typeof option == "object" && option);
+
+                if (!data) $this.data("snake.progress", (data = new Progress(this, options)))
+                if (typeof option == "number") {
+                    data.updataProgress(option);
+                }
+            });
+        }
+        var old = $.fn.dropdown
+
+        $.fn.progress = Plugin
+        $.fn.progress.Constructor = Progress
+
+
+        // DROPDOWN NO CONFLICT
+        // ====================
+
+        $.fn.progress.noConflict = function() {
+            $.fn.dropdown = old
+            return this
+        }
+        $(window).on("load", function() {
+            $("[data-snake='progress'").each(function() {
+                Plugin.call($(this), $(this).data());
+            });
+        });
+    })(jQuery);
+    </script>
+    <script>
+    $("#test-btn").on("click", function() {
+        $("#progress").progress(50);
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流</title>
+    <style>
+    .clearfix:after {
+        clear: both;
+        content: '.';
+        display: block;
+        width: 0;
+        height: 0;
+        visibility: hidden;
+    }
+    
+    #waterfall {
+        margin: 0px auto;
+        width: 900px;
+    }
+    
+    .row {
+        width: 300px;
+        float: left;
+    }
+    
+    .row img {
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="waterfall" class="clearfix">
+        <div id="row-1" class="row row-1">
+            <!-- <img class="img" src="http://img.alicdn.com/imgextra/i3/78622573/TB2oGjDspXXXXcFXXXXXXXXXXXX_!!78622573.jpg" alt=""> -->
+        </div>
+        <div id="row-2" class="row row-2">
+            <!--  <img class="img" src="http://img.alicdn.com/imgextra/i2/78622573/TB24t3eqVXXXXXkXpXXXXXXXXXX_!!78622573.jpg" alt=""> -->
+        </div>
+        <div id="row-3" class="row row-3">
+            <!-- <img class="img" src="http://img.alicdn.com/imgextra/i3/78622573/TB2scIArVXXXXbsXXXXXXXXXXXX_!!78622573.jpg" alt=""> -->
+        </div>
+    </div>
+    <!-- 第三方库 -->
+    <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
+    <script>
+    (function() {
+        var imgList = [
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2oGjDspXXXXcFXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB24t3eqVXXXXXkXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2scIArVXXXXbsXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2kaNZaHJmpuFjSZFwXXaE4VXa_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2FKHospXXXXXPXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB2hRY3spXXXXXaXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2J.I1spXXXXXsXFXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2Elh5sFXXXXbXXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2DKwyqVXXXXaVXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2gZkSsFXXXXacXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2Zd_KqVXXXXcjXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2FKHospXXXXXPXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB2hRY3spXXXXXaXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2pXsgsFXXXXX1XpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2u4IIrVXXXXboXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2_QYkspXXXXXjXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2HApWsFXXXXcxXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB24Sw_rVXXXXaiXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2fI8.sXXXXXcBXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB2QwOosXXXXXcKXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2oGjDspXXXXcFXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB24t3eqVXXXXXkXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2scIArVXXXXbsXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2kaNZaHJmpuFjSZFwXXaE4VXa_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2FKHospXXXXXPXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB2hRY3spXXXXXaXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2J.I1spXXXXXsXFXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2Elh5sFXXXXbXXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2DKwyqVXXXXaVXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2gZkSsFXXXXacXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2Zd_KqVXXXXcjXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2FKHospXXXXXPXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB2hRY3spXXXXXaXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i2/78622573/TB2pXsgsFXXXXX1XpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2u4IIrVXXXXboXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i1/78622573/TB2_QYkspXXXXXjXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2HApWsFXXXXcxXXXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB24Sw_rVXXXXaiXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i3/78622573/TB2fI8.sXXXXXcBXpXXXXXXXXXX_!!78622573.jpg",
+            "http://img.alicdn.com/imgextra/i4/78622573/TB2QwOosXXXXXcKXXXXXXXXXXXX_!!78622573.jpg"
+        ]
+
+        var rowList = [{
+            row: 1,
+            height: 0
+        }, {
+            row: 2,
+            height: 0
+        }, {
+            row: 3,
+            height: 0
+        }];
+        var row01Elment = document.getElementById("row-1"),
+            row02Elment = document.getElementById("row-2"),
+            row03Elment = document.getElementById("row-3");
+        var rowWidth = 300;
+        var minHeightElment = rowList[0];
+
+
+
+        //获取缩放后的高度
+        function getImgHeight(imgObj) {
+            var height = rowWidth * imgObj.height / imgObj.width;
+            return height;
+        }
+
+        function appendElement(imgObj) {
+            for (var i = 0; i < rowList.length; i++) {
+                if (!(minHeightElment.height < rowList[i].height)) {
+                    minHeightElment = rowList[i];
+                }
+            }
+            switch (minHeightElment.row) {
+                case 1:
+                    rowList[0].height +=getImgHeight(imgObj);
+                    row01Elment.appendChild(imgObj);
+                    break;
+                case 2:
+                    rowList[1].height += getImgHeight(imgObj);
+                    row02Elment.appendChild(imgObj);
+                    break;
+                case 3:
+                    rowList[2].height += getImgHeight(imgObj);
+                    row03Elment.appendChild(imgObj);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /**
+         * 速度快 异步
+         * 这种方式 因为图片大小不一样 所以图片加载的顺序会乱掉 
+         * 打印 i 的顺序不是 0,1,2....
+         */
+        function imgOnload(i) {
+            var imgObj = new Image();
+            imgObj.src = imgList[i];
+            imgObj.onerror = function() {
+                console.log("error");
+            }
+            if (imgObj.complate) {
+                console.log("complate" + i + "-" + imgObj.width, imgObj.height);
+                appendElement(imgObj);
+            } else {
+                imgObj.onload = function() {
+                    console.log("onload-" + i + "-" + imgObj.width, imgObj.height);
+                    appendElement(imgObj);
+                }
+            }
+        }
+
+        for (var i = 0; i < imgList.length; i++) {
+            imgOnload(i);
+        }
+
+        /**
+         * 速度慢 同步
+         * 打印 imgIndex 的顺序是 0,1,2....
+         */
+        /*var imgIndex2 = 0;
+
+        function imgOnload2() {
+            if (imgIndex2 >= imgList.length) {
+                return false;
+            }
+            var imgObj = new Image();
+            imgObj.src = imgList[imgIndex2];
+            imgObj.onerror = function() {
+                console.log("error");
+            }
+            if (imgObj.complate) {
+                console.log("complate" + imgIndex2 + "-" + imgObj.width, imgObj.height);
+                imgIndex2++;
+                imgOnload2()
+            } else {
+                imgObj.onload = function() {
+                    console.log("onload-" + imgIndex2 + "-" + imgObj.width, imgObj.height);
+                    imgIndex2++;
+                    imgOnload2()
+                }
+            }
+        }
+        imgOnload2();*/
+    })();
+    </script>
+</body>
+
+</html>
