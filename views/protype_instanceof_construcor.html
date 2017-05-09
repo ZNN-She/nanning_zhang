@@ -25,11 +25,13 @@ A.prototype = {
 
 
 
-原始类型: Undefined Boolean Number String Object(Null)
+原始类型: 五种简单数据类型 Undefined Boolean Number String Null 一种复杂数据类型 Object(Null认为是空对象)
+        javascript不支持任何创建自定义类型的机制，而最终值都将是六中数据类型之一
 
-内置对象: Object Function Array String Boolean Number Date RegExp Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
+内置对象(引用类型): Object Function Array String Boolean Number Date RegExp Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
 
-区分类型: protype instanceof construcor Object.prototype.toString.call()
+区分类型: typeof instanceof construcor Object.prototype.toString.call()
+    typeof : 返回数据类型（undefiend boolean string number object function）
 
 null == undefined //true
 null === undefined //false

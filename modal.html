@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>模态框</title>
+    <style>
+    .modal {
+    	display: none;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background: rgba(3, 3, 3, 0.3);
+        z-index: 1000;
+    }
+    .modal.modal-open{
+    	display: block;
+    }
+    
+    .modal-dialog {
+        background: #fff;
+        width: 600px;
+        max-height:80%;
+        overflow-y: auto;
+        overflow-x: hidden; 
+        margin: 30px auto;
+        border: 1px solid #ddd;
+        box-shadow: 0px 1px 1px 1px #ddd;
+        border-radius: 5px;
+    }
+    
+    .modal-content {}
+    
+    .modal-header {
+        height: 50px;
+        padding: 0 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .modal-header .close {
+        border: 0;
+        background: #fff;
+        margin-top: 12px;
+        color: #ddd;
+        font-size: 20px;
+        float: right;
+        font-weight: 600;
+    }
+    
+    .modal-header .modal-title {
+        font-size: 20px;
+        line-height: 50px;
+    }
+    
+    .modal-body {
+        padding: 10px;
+    }
+    
+    .modal-footer {
+        padding: 10px;
+        border-top: 1px solid #ddd;
+        text-align: center;
+    }
+    
+    .modal-footer .btn {
+        border: 0;
+        font-size: 14px;
+        line-height: 30px;
+        border-radius: 3px;
+        padding: 0 15px;
+    }
+    
+    .modal-footer .btn.btn-close {}
+    
+    .modal-footer .btn.btn-save {
+        color: #fff;
+        background: #337ab7;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="modal" class="modal" data-snake='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                    <div class="modal-title">modal title标题</div>
+                </div>
+                <div class="modal-body">
+                    内容太1
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-close" data-dismiss="modal">close</button>
+                    <button class="btn btn-save" data-close="modal">save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal2" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                    <div class="modal-title">modal title标题2222</div>
+                </div>
+                <div class="modal-body">
+                    内容太2
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-close" data-dismiss="modal">close</button>
+                    <button class="btn btn-save" data-close="modal">save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="modal-open">modal open</button>
+    <button id="modal-open2">modal open222</button>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+    (function($) {
+        function Modal(ele, option) {
+            this.$ele = $(ele);
+            this.options = option;
+            this.closeFn = option.closeFn;
+            this.dismissFn = option.dismissFn;
+
+            this.init();
+        }
+        Modal.DEFAULTS = {
+        	backdrop:true,
+            closeFn: null,
+            dismissFn: null
+        };
+        Modal.prototype.init = function() {
+            var self = this;
+            self.$ele.on("click", '[data-dismiss="modal"]', function(event) {
+                self.dismiss();
+                event.stopPropagation(); //阻止冒泡
+            });
+            self.$ele.on("click", '[data-close="modal"]', function() {
+                self.close();
+                return false; //阻止冒泡
+            });
+            self.$ele.on("click", function(){
+            	self.options.backdrop && $(event.target).is(".modal") && self.dismiss();
+            });
+        };
+        Modal.prototype.open = function() {
+            var self = this;
+            self.$ele.addClass('modal-open');
+        };
+        Modal.prototype.close = function() {
+            var self = this;
+            self.closeFn && self.closeFn.call(self, self);
+            self.hide();
+        };
+        Modal.prototype.dismiss = function() {
+            var self = this;
+            self.dismissFn && self.dismissFn.call(self, self);
+            self.hide();
+        };
+        Modal.prototype.hide = function() {
+            var self = this;
+            self.$ele.removeClass('modal-open');
+        };
+
+        function Plugin(option) {
+            return this.each(function() {
+                var $this = $(this);
+                var data = $this.data("snake.modal");
+                var options = $.extend(true, $.extend(Modal.DEFAULTS), $this.data(), typeof option == "object" && option);
+
+                if (!data) $this.data("snake.modal", (data = new Modal(this, options)));
+                if (typeof option == "string") data[option]();
+            });
+        }
+
+        var old = $.fn.modal;
+
+        $.fn.modal = Plugin;
+        $.fn.modal.Constructor = Modal;
+
+        // DROPDOWN NO CONFLICT
+        // ====================
+        $.fn.modal.noConflict = function() {
+            $.fn.dropdown = old
+            return this
+        }
+
+        $(window).on("load", function() {
+            return $("[data-snake='modal']").each(function() {
+                Plugin.call($(this), $(this).data());
+            });
+        });
+    })(jQuery);
+    </script>
+    <script>
+    $("#modal-open").on("click", function() {
+        var result = $("#modal").modal("open").data("snake.modal");
+        result.closeFn = function(result) {
+            console.log(result);
+        }
+        result.dismissFn = function(result) {
+            console.log(result);
+        }
+    });
+
+    $("#modal2").modal({
+    	backdrop:false,
+    	closeFn:function(result){
+    		console.log("closeFn");
+    	},
+    	dismissFn:function(result){
+    		console.log("dismissFn");
+    	}
+    });
+    $("#modal-open2").on("click", function() {
+    	$("#modal2").modal("open");
+    });
+    </script>
+</body>
+
+</html>
