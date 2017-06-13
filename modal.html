@@ -80,25 +80,7 @@
 </head>
 
 <body>
-    <div id="modal" class="modal" data-snake='modal'>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">
-                        <span>×</span>
-                    </button>
-                    <div class="modal-title">modal title标题</div>
-                </div>
-                <div class="modal-body">
-                    内容太1
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-close" data-dismiss="modal">close</button>
-                    <button class="btn btn-save" data-close="modal">save</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div id="modal2" class="modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -110,6 +92,26 @@
                 </div>
                 <div class="modal-body">
                     内容太2
+                    <button id="alertModal" class="btn">在弹一个</button>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-close" data-dismiss="modal">close</button>
+                    <button class="btn btn-save" data-close="modal">save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="modal" data-snake='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">
+                        <span>×</span>
+                    </button>
+                    <div class="modal-title">modal title标题111</div>
+                </div>
+                <div class="modal-body">
+                    内容太1
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-close" data-dismiss="modal">close</button>
@@ -221,6 +223,9 @@
     });
     $("#modal-open2").on("click", function() {
     	$("#modal2").modal("open");
+    });
+    $("#alertModal").on("click",function(){
+        $("#modal").modal("open");
     });
     </script>
 </body>

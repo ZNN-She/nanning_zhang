@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>promise-loading</title>
+</head>
+
+<body>
+<div style="padding: 20px;width: 40px; height: 40px;background: #d00;"></div>
+    <div id="table" style="width: 200px;height: 200px;display: inline-block;border: 1px solid #ddd;">
+        <table>
+            <tr>
+                <td>123</td>
+            </tr>
+        </table>
+    </div>
+    <div id="table2" style="width: 200px;height: 200px;display: inline-block;border: 1px solid #ddd; margin-top: 20px;">
+        <table>
+            <tr>
+                <td>123</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <button id="button">loading</button>
+        <button id="button2">loading2</button>
+        <button id="button3">loading3</button>
+    </div>
+    <script src="../../plugins/jQuery/jquery-2.1.4.js"></script>
+    <script src="loading.js"></script>
+    <script>
+    (function($) {
+        //模拟请求
+        function ajax() {
+            var dtd = $.Deferred();
+            setTimeout(dtd.resolve, 2000);
+            // setTimeout(dtd.reject, 2000);
+            // setTimeout(dtd.notify, 2000);
+            return dtd.promise(); //此处也可以直接返回dtd
+        };
+
+        $("#button").on("click", function() {
+            //loading
+            var loading = ajax();
+            $.loading(loading, $("#table"));
+        })
+        $("#button2").on("click", function() {
+            //loading
+            var loading = ajax();
+            $.loading(loading, $("#table2"));
+        })
+        $("#button3").on("click", function() {
+            //loading
+            var loading = ajax();
+            $.loading(loading);
+        })
+
+    })(jQuery)
+    </script>
+</body>
+
+</html>

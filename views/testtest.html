@@ -1,117 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-
-<body>
-    <!-- <div class="view ng-scope" ng-controller="adminTaskManageCtrl">
-        <div style="text-align:center;background:#f2c98e;" id="zeroClipContainer">
-            <div style="position:relative;text-align:center;background:#f2c98e;">
-                <img style="display:block;width:100%;" src="http://img.alicdn.com/imgextra/i1/78622573/TB2VOB2awxlpuFjSszbXXcSVpXa_!!78622573.jpg" alt="">
-                <div ng-click="zeroClipboardCopy()" style="position:absolute;left: 57.5%;top: 74.5%;width: 13.5%;height: 6%;cursor:pointer;" id="zero-clipboard">
-                </div>
-                <div style="position:absolute;left: 71%;top: 44%;width: 2%;height: 3%;cursor:pointer;background:red;" data-toggle="tooltip" data-placement="top" data-html="true" data-template="<div class='tooltip item-tooltip-warning' role='tooltip'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>" title="1.被邀好友从未订购过全能掌柜，或订购过全能掌柜但已过期30天以上
-                </br>
-                2.被邀好友通过邀请链接订购并登陆全能掌柜即为邀请成功
-                </br>
-                3.邀请成功后，联系全能掌柜在线客服领取短信奖励
-                </br>
-                4.多邀多送，上不封顶">
-                </div>
-            </div>
-            <img style="display:inline-block;" src="http://img.alicdn.com/imgextra/i1/78622573/TB22klJaNlmpuFjSZPfXXc9iXXa_!!78622573.jpg" alt="">
-        </div>
-        弹框
-        <div id="publish-active-modal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content" style="width:400px;text-align:center;">
-                    <div class="modal-header" style="background:#f29f27;">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
-                            <tton>
-                                <h4 class="modal-title" style="color:#fdf100;">
-                            复制成功
-                        </h4>
-                    </div>
-                    <div class="modal-body" style="background:#fef7db;color:#b8400b;">
-                        <div style="display:inline-block;font-size:18px;line-height:50px;">
-                            聊天时按住Ctrl+V就能分享给好友啦！
-                        </div>
-                        <div>
-                            （ 好友订购登陆后记得向客服领取短信哦~ ）
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="background:#fef7db;text-align:center;border-top:0px;">
-                        <button type="button" class="btn btn-success" data-dismiss="modal" style="border:0px;border-top:0px;background:#fdaa32;color:#fff;width:120px;">确认
-                            <tton>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <div>输入<input type="text" id="price-in"></div>
-    <div>输出<input type="text" id="price-out"></div>
-    <button id="price-btn">输出</button>
-
-    <span id="time">aa</span>
-    <!-- 第三方库 -->
-    <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
-    <script>
-    (function() {
-        var priceInEl = $("#price-in");
-        var priceOutEl = $("#price-out");
-        $("#price-btn").on("click", function(){
-            var price = priceInEl.val();
-
-            price = corrPrice(price);
-
-            priceOutEl.val(price);
-        })
-
-        function corrPrice(price){
-
-
-
-            return price;
-        }
-
-        function test(){
-            var href = window.locattion.href;
-            var index = href.indeOf("?");
-            var paramStr = href.subString(index+1);
-            var mapArr = paramStr.split("&");
-            var parameJson = {};
-            for(var i = 0; i < mapArr.length; i++){
-                var mapItemArr =mapArr[i].split("=");
-                parameJson[mapItemArr[0]] = mapItemArr[1];
-            };
-            return parameJson;
-        }
-
-        function correctPrice(price){
-            if(!price.toString().length){
-                return price;
+    <head>
+        <meta charset="UTF-8"/>
+        <title>
+            Document
+        </title>
+        <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                po
             }
-            var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
-            if (reg.test(price)) {
-                return price;
-            } else {
-                price = price.replace(/[^(0-9)|\.]/g, "");
-                if(!price.length){
-                    return price;
+            
+            .center {
+                width: 300px;
+                background: #dd0;
+                margin: 0 auto;
+                position: relative;
+                top: 50%;
+                /*margin-top: -50%;*/
+                transform: translateY(-50%);
+            }
+            </style>
+    </head>
+    <body>
+        <!-- <div>输入
+                        <input type="text" id="price-in">
+                    </div>
+                    <div>输出
+                        <input type="text" id="price-out">
+                    </div>
+                    <button id="price-btn">输出</button>
+                    <span id="time">aa</span> -->
+
+
+       <!--  <div class="center">
+           <h1>
+               1111
+           </h1>
+           <h1>
+               1111
+           </h1>
+           <h1>
+               1111
+           </h1>
+           <h1>
+               1111
+           </h1>
+       </div> -->
+
+
+        <div style="height: 200px;border: 1px solid #ddd;">
+            <div style="text-align: center;">
+                <div style="display: inline-block;">
+                    <img src="https://img.alicdn.com/bao/uploaded/i1/TB1WusUJVXXXXa_XVXXXXXXXXXX_!!0-item_pic.jpg_60x60.jpg" alt="">
+                </div>
+                <div style="display: inline-block;vertical-align: top;line-height: 40px;">
+                    <div>就的撒房价爱神的箭发送到附近</div>
+                    <div>就的撒房价爱神的箭发送到附近</div>
+                    <div>就的撒房价爱神的箭发送到附近</div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 第三方库 -->
+        <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
+        <script>
+            /*(function() {
+                                    $("#price-btn").on("click", function() {
+                                        console.log(1);
+                                    });
+                                    $("#price-btn").on("click", function() {
+                                        console.log(2);
+                                    });
+                                    document.getElementById("price-btn").onclick = function() {
+                                        console.log(3);
+                                    }
+                                    document.getElementById("price-btn").onclick = function() {
+                                        console.log(4);
+                                    }
+                    
+                                    function a() {
+                                        var i = 0;
+                    
+                                        function b() {
+                                            cosnole.log(++i);
+                                        }
+                                        return b;
+                                    }
+                                    var c = a();
+                                    c();
+                                })();*/
+            (function() {
+                function getCharlen(s) {
+                    return Function('return ' + s.split('').map(function(e) {
+                        return e.charCodeAt(0) < 256 ? 1 : 2
+                    }).join("+"))()
                 }
-                var priceArr = price.split(".");
-                var intPart = priceArr[0];
-                var floatPart = priceArr[1].length ? "." + priceArr[1].substr(0,2) : "";
-                price = priceArr[0] + priceArr[1];
-                return price;
-            }
-            return price;
-        }
-    })();
-    </script>
-</body>
-
+        
+                console.log(getCharlen('123中文abc')); //10
+            })();
+            </script>
+    </body>
 </html>
