@@ -8,7 +8,7 @@
     <title>rem</title>
     <style>
     html {
-        font-size:10px !important;
+        font-size: 10px !important;
     }
     /*浏览器默认为16px*/
     /* @media only screen and (min-width: 240px) {
@@ -87,8 +87,9 @@
             font-size: 853.333% !important;
         }
     } */
-    body{
-    	margin: 0px;
+    
+    body {
+        margin: 0px;
     }
     
     .test1 {
@@ -109,8 +110,57 @@
     <div class="test1"></div>
     <div class="test2"></div>
     <div style="width: 100px;">
-    	<span style="padding: 50% 0px;background: #ddd;"></span>
+        <span style="padding: 50% 0px;background: #ddd;"></span>
     </div>
+    <label>城市 : </label><input id="country_name" name="country_name" type="text" list="city" />  
+<datalist id="city">  
+    <option value="中国 北京">  
+    <option value="中国 上海">  
+    <option value="中国 广州">  
+    <option value="中国 深圳">  
+    <option value="中国 东莞">  
+</datalist>
+    <script>
+    {
+        "data": [{
+            "category": "服装鞋包>女装/女士精品>连衣裙",
+            "channel": "tmall",
+            "cid": 50010850,
+            "code": 0,
+            "createTime": 1497254620782,
+            "id": 550551369714,
+            "itemLoc": "广东深圳",
+            "picUrl": "//img.alicdn.com/bao/uploaded/i3/TB1agueRXXXXXcKXFXXXXXXXXXX_!!0-item_pic.jpg",
+            "price": "119.0",
+            "sellerId": 1042138107,
+            "soldOut": false,
+            "storeId": 100119088,
+            "storeName": "arteyes艺艾旗舰店",
+            "sxjtime": 1497253198000,
+            "title": "2017夏装胖妹妹大码女装新款潮胖mm宽松显瘦藏肉遮肚子牛仔连衣裙",
+            "updateTime": 1497254620782,
+            "wangwangId": "arteyes艺艾旗舰店"
+        }]
+    }
+    yAxis: {        //Y轴
+            name:'销量（万件）',
+            type:'value',
+            max:150,
+            splitArea : {         //Y轴下设置区域颜色
+                show : true,
+                areaStyle:{
+                    color:
+                        ['rgba(250,250,250,1)','rgba(255,255,255,1)' ]
+                }
+            },
+            axisLine:{          //Y轴颜色
+                lineStyle:{
+                    color:'#82a7cb',
+                    width:2
+                }
+            }
+        },
+    </script>
 </body>
 
 </html>

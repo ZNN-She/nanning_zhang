@@ -1,109 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>
-            Document
-        </title>
-        <style>
-            html,
-            body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                po
-            }
-            
-            .center {
-                width: 300px;
-                background: #dd0;
-                margin: 0 auto;
-                position: relative;
-                top: 50%;
-                /*margin-top: -50%;*/
-                transform: translateY(-50%);
-            }
-            </style>
-    </head>
-    <body>
-        <!-- <div>输入
-                        <input type="text" id="price-in">
-                    </div>
-                    <div>输出
-                        <input type="text" id="price-out">
-                    </div>
-                    <button id="price-btn">输出</button>
-                    <span id="time">aa</span> -->
 
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        Document
+    </title>
+    <style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        po
+    }
+    
+    .center {
+        width: 300px;
+        background: #dd0;
+        margin: 0 auto;
+        /*position: relative;*/
+        top: 50%;
+        /*margin-top: -50%;*/
+        transform: translateY(-50%);
+    }
+    </style>
+</head>
 
-       <!--  <div class="center">
-           <h1>
-               1111
-           </h1>
-           <h1>
-               1111
-           </h1>
-           <h1>
-               1111
-           </h1>
-           <h1>
-               1111
-           </h1>
-       </div> -->
-
-
-        <div style="height: 200px;border: 1px solid #ddd;">
-            <div style="text-align: center;">
-                <div style="display: inline-block;">
-                    <img src="https://img.alicdn.com/bao/uploaded/i1/TB1WusUJVXXXXa_XVXXXXXXXXXX_!!0-item_pic.jpg_60x60.jpg" alt="">
-                </div>
-                <div style="display: inline-block;vertical-align: top;line-height: 40px;">
-                    <div>就的撒房价爱神的箭发送到附近</div>
-                    <div>就的撒房价爱神的箭发送到附近</div>
-                    <div>就的撒房价爱神的箭发送到附近</div>
-                </div>
+<body>
+    <div>输入
+        <input type="text" id="price-in">
+    </div>
+    <div>输出
+        <input type="text" id="price-out">
+    </div>
+    <button id="price-btn">输出</button>
+    <span id="time">aa</span>
+    <div class="center">
+        <h1>
+            1111
+        </h1>
+        <h1>
+            1111
+        </h1>
+        <h1>
+            1111
+        </h1>
+        <h1>
+            1111
+        </h1>
+    </div>
+    <div style="height: 200px;border: 1px solid #ddd;">
+        <div style="text-align: center;">
+            <div style="display: inline-block;">
+                <img src="https://img.alicdn.com/bao/uploaded/i1/TB1WusUJVXXXXa_XVXXXXXXXXXX_!!0-item_pic.jpg_60x60.jpg" alt="">
+            </div>
+            <div style="display: inline-block;vertical-align: top;line-height: 40px;">
+                <div>就的撒房价爱神的箭发送到附近</div>
+                <div>就的撒房价爱神的箭发送到附近</div>
+                <div>就的撒房价爱神的箭发送到附近</div>
             </div>
         </div>
+        <a href="" target="_blank"></a>
+    </div>
+    <div style="width: "></div>
+    <!-- 第三方库 -->
+    <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
+    <script>
+    (function() {
+        $("#price-btn").on("click", function() {
+            console.log(1);
+        });
+        $("#price-btn").on("click", function() {
+            console.log(2);
+        });
+        document.getElementById("price-btn").onclick = function() {
+            console.log(3);
+        }
+        document.getElementById("price-btn").onclick = function() {
+            console.log(4);
+        }
 
+        function a() {
+            var i = 0;
 
-        <!-- 第三方库 -->
-        <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
-        <script>
-            /*(function() {
-                                    $("#price-btn").on("click", function() {
-                                        console.log(1);
-                                    });
-                                    $("#price-btn").on("click", function() {
-                                        console.log(2);
-                                    });
-                                    document.getElementById("price-btn").onclick = function() {
-                                        console.log(3);
-                                    }
-                                    document.getElementById("price-btn").onclick = function() {
-                                        console.log(4);
-                                    }
-                    
-                                    function a() {
-                                        var i = 0;
-                    
-                                        function b() {
-                                            cosnole.log(++i);
-                                        }
-                                        return b;
-                                    }
-                                    var c = a();
-                                    c();
-                                })();*/
-            (function() {
-                function getCharlen(s) {
-                    return Function('return ' + s.split('').map(function(e) {
-                        return e.charCodeAt(0) < 256 ? 1 : 2
-                    }).join("+"))()
-                }
-        
-                console.log(getCharlen('123中文abc')); //10
-            })();
-            </script>
-    </body>
+            function b() {
+                cosnole.log(++i);
+            }
+            return b;
+        }
+        var c = a();
+        c();
+    })();
+
+    (function() {
+        function getCharlen(s) {
+            return Function('return ' + s.split('').map(function(e) {
+                return e.charCodeAt(0) < 256 ? 1 : 2
+            }).join("+"))()
+        }
+
+        console.log(getCharlen('123中文abc')); //10
+    })();
+    {
+        code:"0",  // 0:成功 -1:未登录  -2:权限不够 -3:重定向 -4:参数错误
+        msg:"",
+        data:{
+            {
+                data:[],
+                count:Number,  //总数据条数
+                page:Number,  //返回的第几页数据
+                pageSize:Number //每页显示的条数
+            }
+        }
+    }
+
+    </script>
+</body>
+
 </html>
