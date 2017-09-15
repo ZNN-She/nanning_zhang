@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>页面布局</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        min-height: 100%;
+        background: #000;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body>.frame {
+        background: #0d0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding-bottom: 150px;
+        box-sizing: border-box;
+    }
+    
+    body>.frame>.header {
+        height: 50px;
+        width: 100%;
+        background: #00d;
+        z-index: 10000;
+        box-sizing: border-box;
+    }
+    
+    body>.frame>.body {
+        position: relative;
+        background: #dd0;
+        min-height: 100%;
+        /*background: #ffffff url(../images/sidebar-bg.png) repeat-y;*/
+        box-sizing: border-box;
+    }
+    
+    body>.frame>.body>.sidebar {
+        background: #e9e9e9;
+        width: 150px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+    }
+    
+    body>.frame>.body>.main {
+        background: #0dd;
+        width: 100%;
+        float: left;
+        padding-left: 170px;
+        padding-right: 60px;
+        min-height: 100%;
+        box-sizing: border-box;
+    }
+    
+    body>.frame>.footer {
+        height: 100px;
+        width: 100%;
+        background: #d0d;
+        box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    body>.frame>.smart-ui-bar {
+        position: absolute;
+        bottom: 0px;
+        width: 50px;
+        height: 100%;
+        position: fixed;
+        right: 0px;
+        top: 0px;
+        background: #d00;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="frame">
+        <div class="header">
+            header
+        </div>
+        <div class="body">
+            <div class="sidebar">
+                <div>top</div>
+                <div style="position: absolute;bottom: 20px;">bottom</div>
+            </div>
+            <div class="main">
+                <div class="container-fluid">
+                    <div class="title-bar">标题</div>
+                    <div>内容一</div>
+                    <div>内容二</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            footer
+        </div>
+        <div class="smart-ui-bar">
+            smart
+        </div>
+    </div>
+</body>
+
+</html>

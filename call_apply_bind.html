@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>
+			call_apply_bind
+		</title>
+	</head>
+	<body>
+		<script>
+		var test = {
+		    a : 5,
+		    b : 6,
+		    sum : function (a,b) {
+		        var self = this;
+		        function getA() {
+		            return self.a;
+		        }
+		        function getB(){
+		            return self.b;
+		        }
+		        alert(a);
+		        alert(b);
+		        return getA() + getB();
+		    }
+		}
+		var obj = {a:2,b:3};
+		alert(test.sum.call(obj,4,5));      // 调用时self = this = obj，alert顺序4,5,5
+		alert(test.sum.apply(obj,[6,7]));   // 调用时self = this = obj，alert顺序6,7,5
+		var sum = test.sum.bind(obj,8);     // 此处返回一个只有一个参数的函数sum（b）
+		alert(sum(9)); 
+		</script>
+	</body>
+</html>

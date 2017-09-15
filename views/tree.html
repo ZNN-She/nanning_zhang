@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>树菜单</title>
+    <style type="text/css">
+    li {
+        list-style: none;
+    }
+    
+    li ul {
+        display: none;
+    }
+    
+    p {
+        position: relative;
+        cursor: pointer;
+    }
+    
+    span {
+        position: absolute;
+        left: -20px;
+        color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function getStyle(el, attr) {
+        return getComputedStyle(el)[attr];
+    }
+    var data = [{
+        text: "家用电器",
+        child: [{
+            text: "电视",
+            child: [{
+                text: "曲面电视",
+                child: [{
+                    text: "4k屏"
+                }, {
+                    text: "1080P"
+                }]
+            }, {
+                text: "超薄电视"
+            }]
+        }, {
+            text: "空调",
+            child: [{
+                text: "壁挂式空调"
+            }, {
+                text: "柜式空调"
+            }, {
+                text: "中央空调"
+            }]
+        }, {
+            text: "洗衣机"
+        }, {
+            text: "冰箱"
+        }, {
+            text: "进口电器"
+        }]
+    }, {
+        text: "手机 / 运营商 / 数码"
+    }, {
+        text: "电脑 / 办公",
+        child: [{
+            text: "电脑整机"
+        }, {
+            text: "电脑配件"
+        }]
+    }, {
+        text: "家居 / 家具 / 家装 / 厨具"
+    }, {
+        text: "男装 / 女装 / 童装 / 内衣"
+    }, {
+        text: "美妆个护 / 宠物"
+    }];
+    (function() {
+        var list = document.createElement("ul");
+        create(list, data);
+        document.body.appendChild(list);
+        addEv();
+
+        function create(list, data) { //传入ul和数组
+            for (var i = 0; i < data.length; i++) { //循环数组长度生成li和内容
+                var li = document.createElement("li");
+                var p = document.createElement("p");
+                p.innerHTML = data[i].text;
+                li.appendChild(p);
+                if (data[i].child) { //如果还有子项
+                    var ul = document.createElement("ul"); //生成ul
+                    create(ul, data[i].child); //传入ul，以及子项的数组，生成子项的li
+                    li.appendChild(ul);
+                    p.innerHTML = "<span>+</span>" + data[i].text;
+                }
+                list.appendChild(li);
+            }
+        }
+    })();
+
+    function addEv() {
+        var p = document.querySelectorAll('p');
+        for (var i = 0; i < p.length; i++) {
+            p[i].onclick = function() {
+                var ul = this.nextElementSibling; /*获取它下边的ul */
+                if (ul) { /*存在*/
+                    var uls = this.parentNode.parentNode.getElementsByTagName("ul");
+                    for (var i = 0; i < uls.length; i++) {
+                        if (uls[i] != ul) {
+                            uls[i].style.display = "none"; //清除掉同级所有ul(排除当前个)
+                        }
+                    }
+                    /* 操作当前个 */
+                    if (getStyle(ul, "display") == "none") {
+                        ul.style.display = "block";
+                    } else {
+                        ul.style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

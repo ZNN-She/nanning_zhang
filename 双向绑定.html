@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>双向绑定</title>
+</head>
+
+<body>
+    <script>
+    class DataModel {
+        constructor(str = '') {
+            this.data = str;
+            this.nodes = [];
+        }
+        bindTo(node) {
+            this.nodes.push(node);
+            this.update();
+        }
+        update() {
+            const INPUT_NODE = ['INPUT', 'TEXTAREA'];
+            let {
+                nodes
+            } = this;
+            for (let i = 0, node; node = nodes[i++];) {
+                if (INPUT_NODE.includes(node.nodeName)) {
+                    if (node.value !== this.data) { //避免光标跳到尾部
+                        node.value = this.data;
+                    }
+                } else {
+                    node.textContent = this.data;
+                }
+            }
+        }
+        set(str) {
+            if (str !== this.value) {
+                this.data = str;
+                this.update();
+            }
+        }
+        get() {
+            return this.data;
+        }
+    }
+    </script>
+</body>
+
+</html>

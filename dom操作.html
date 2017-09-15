@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>dom操作</title>
+</head>
+<body>
+
+	<div id="list">
+		<p>{{name}}</p>
+		<p>{{id}}</p>
+		<p>{{title}}</p>
+	</div>
+	<div id="checkbox">
+	    <p>checkbox</p>
+		<label for="c-1"><input name="c" type="checkbox" id="c-1" value="c-1">c-1</label>
+		<label for="c-2"><input name="c" type="checkbox" id="c-2" value="c-2">c-2</label>
+		<label for="c-3"><input name="c" type="checkbox" id="c-3" value="c-3">c-3</label>
+	</div>
+	<div id=radio>
+		<p>radio</p>
+		<label for="r-1"><input name="r" type="radio" id="r-1" value="r-1">c-1</label>
+		<label for="r-2"><input name="r" type="radio" id="r-2" value="r-2">c-2</label>
+		<label for="r-3"><input name="r" type="radio" id="r-3" value="r-3">c-3</label>
+	</div>
+	<textarea name="12" id="213" cols="30" rows="10" placeholder="123"></textarea>
+
+	<button id="btn-c">checkbox</button>
+	<button id="btn-r">radio</button>
+	
+	<script src="plugins/jQuery/jquery-2.1.4.js"></script>
+	<script>
+		(function($){
+			$list = $("#list");
+			console.log($list.text(function(index, item){
+				console.log(index, item);
+			}));
+			console.log($list.html());
+			$list.append($list.html().replace("{{name}}", "zhang"));
+		})(jQuery);
+
+		$("input:checkbox[name='c']").on("change", function(){
+			console.log($("input:checkbox[name='c']:checked").length);
+		});
+		$("input:radio[name='r']").on("change", function(){
+			console.log($("input:radio[name='r']:checked").val());
+		});
+
+		$("#btn-c").on("click", function(){
+			$("input:checkbox[value='c-2']").prop("checked",false).change();
+		});
+		$("#btn-r").on("click", function(){
+			$("input:radio[name='r'][value='r-2']").prop("checked", true).change();
+		});
+
+		/*
+		$().text();
+		$().html();
+		$().addClass();
+		$().after();
+		$().removeClass();
+		$().append();
+		$().appendTo();
+		$().attr();
+		$().before();
+		$().clone();
+		$().css();
+		$().detach();
+		$().empty();
+		$().hasClass();
+		$().height();
+		$().html();
+		$().innerHeight();
+		$().innerWidth();
+		$().insertAfter();
+		$().insertBefore();
+		$().offset();
+		$().outerHeight();
+		$().outerWidth();
+		$().position();
+		$().prepend();
+		$().prependTo();
+		$().prop();
+		$().remove();
+		$().removeAttr();
+		$().removeClass();
+		$().removeProp();
+		$().replaceAll();
+		$().replaceWith();
+		$().scrollLeft();
+		$().scrollTop();
+		$().text();
+		$().toggleClass();
+		$().unwrap();
+		$().unwrap();
+		$().val();
+		$().width();
+		$().wrap();
+		$().wrapInner();
+		*/
+	</script>
+</body>
+</html>
