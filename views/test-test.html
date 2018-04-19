@@ -1,415 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>测试测试</title>
+    <title>Document</title>
 </head>
-<input type="text" id="username">
-<input type="text" id="passward">
-<button id="log-in"></button>
-<div>啥快递哈</div>
-
 <body>
-    <script type="text/javascript" src="../plugins/jQuery/jquery.js"></script>
+    <div style="height:100px;width:100px;background:#ddd;"></div>
+    <span style="padding:100px;background:red;">aa</span>
+    <form action="/test">
+      <input type="text" name='test'>
+      <input type="text" name="aaa">
+      <input type="submit">
+    </form>
     <script>
-    +(function() {
-        var _username = $("#username").val();
-        var _passwaed = $("#passward").val();
-
-        $("#log-in").on("click", function() {
-            // body...
-            _username = $("#username").val();
-            _passwaed = $("#passward").val();
-
-            if (!_username.length) {
-                alert("名字不能不空!");
-                return;
-            }
-            if (!_passwaed.length) {
-                alert("名字不能不空!");
-                return;
-            }
-            $.ajax({
-                url: '/path/to/file',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    username: _username,
-                    passward: _passwaed
-                },
-                success: function(data) {
-                    console.log(data);
-                    // body...
-                    if (data.status == 1) {
-                        //这里写登陆成功的代码
-                    } else {
-                        alert("登录失败！");
-                    }
-                },
-                error: function() {
-                    // body...
-                    alert("接口失败也可以提示登录失败");
+        var obj1={
+            a:111,
+            b:{
+                c:222,
+                d:333,
+                e:function(){
+                    console.log(444);
                 }
-            });
-
-        })
-
-
-        $.ajax({
-            url: '/path/to/file',
-            type: 'POST',
-            dataType: 'JSON',
-            headers: {
-                'Content-Type': 'application/json'
             },
-            data: {
-                MemberDTO: 13372788976
+            f:function(){
+                console.log(555);
             },
-            success: function(data) {
-                // body...
+            g:666
+        };
+        var obj2={
+            a:"aaa",
+            b:{
+                c:"ccc"
             },
-            error: function(data) {
-                // body...
+            g:"ggg"
+        };
+        console.log(Object.assign(obj1,obj2,true));
+
+        var a = {
+          // `url` 是用于请求的服务器 URL
+          url: '/user',
+
+          // `method` 是创建请求时使用的方法
+          method: 'get', // 默认是 get
+
+          // `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL。
+          // 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
+          baseURL: 'https://some-domain.com/api/',
+
+          // `transformRequest` 允许在向服务器发送前，修改请求数据
+          // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
+          // 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
+          transformRequest: [function (data) {
+            // 对 data 进行任意转换处理
+
+            return data;
+          }],
+
+          // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
+          transformResponse: [function (data) {
+            // 对 data 进行任意转换处理
+
+            return data;
+          }],
+
+          // `headers` 是即将被发送的自定义请求头
+          headers: {'X-Requested-With': 'XMLHttpRequest'},
+
+          // `params` 是即将与请求一起发送的 URL 参数
+          // 必须是一个无格式对象(plain object)或 URLSearchParams 对象
+          params: {
+            ID: 12345
+          },
+
+          // `paramsSerializer` 是一个负责 `params` 序列化的函数
+          // (e.g. https://www.npmjs.com/package/qs, http://api.jquery.com/jquery.param/)
+          paramsSerializer: function(params) {
+            return Qs.stringify(params, {arrayFormat: 'brackets'})
+          },
+
+          // `data` 是作为请求主体被发送的数据
+          // 只适用于这些请求方法 'PUT', 'POST', 和 'PATCH'
+          // 在没有设置 `transformRequest` 时，必须是以下类型之一：
+          // - string, plain object, ArrayBuffer, ArrayBufferView, URLSearchParams
+          // - 浏览器专属：FormData, File, Blob
+          // - Node 专属： Stream
+          data: {
+            firstName: 'Fred'
+          },
+
+          // `timeout` 指定请求超时的毫秒数(0 表示无超时时间)
+          // 如果请求话费了超过 `timeout` 的时间，请求将被中断
+          timeout: 1000,
+
+          // `withCredentials` 表示跨域请求时是否需要使用凭证
+          withCredentials: false, // 默认的
+
+          // `adapter` 允许自定义处理请求，以使测试更轻松
+          // 返回一个 promise 并应用一个有效的响应 (查阅 [response docs](#response-api)).
+          adapter: function (config) {
+            /* ... */
+          },
+
+          // `auth` 表示应该使用 HTTP 基础验证，并提供凭据
+          // 这将设置一个 `Authorization` 头，覆写掉现有的任意使用 `headers` 设置的自定义 `Authorization`头
+          auth: {
+            username: 'janedoe',
+            password: 's00pers3cret'
+          },
+
+          // `responseType` 表示服务器响应的数据类型，可以是 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
+          responseType: 'json', // 默认的
+
+          // `xsrfCookieName` 是用作 xsrf token 的值的cookie的名称
+          xsrfCookieName: 'XSRF-TOKEN', // default
+
+          // `xsrfHeaderName` 是承载 xsrf token 的值的 HTTP 头的名称
+          xsrfHeaderName: 'X-XSRF-TOKEN', // 默认的
+
+          // `onUploadProgress` 允许为上传处理进度事件
+          onUploadProgress: function (progressEvent) {
+            // 对原生进度事件的处理
+          },
+
+          // `onDownloadProgress` 允许为下载处理进度事件
+          onDownloadProgress: function (progressEvent) {
+            // 对原生进度事件的处理
+          },
+
+          // `maxContentLength` 定义允许的响应内容的最大尺寸
+          maxContentLength: 2000,
+
+          // `validateStatus` 定义对于给定的HTTP 响应状态码是 resolve 或 reject  promise 。如果 `validateStatus` 返回 `true` (或者设置为 `null` 或 `undefined`)，promise 将被 resolve; 否则，promise 将被 rejecte
+          validateStatus: function (status) {
+            return status >= 200 && status < 300; // 默认的
+          },
+
+          // `maxRedirects` 定义在 node.js 中 follow 的最大重定向数目
+          // 如果设置为0，将不会 follow 任何重定向
+          maxRedirects: 5, // 默认的
+
+          // `httpAgent` 和 `httpsAgent` 分别在 node.js 中用于定义在执行 http 和 https 时使用的自定义代理。允许像这样配置选项：
+          // `keepAlive` 默认没有启用
+          httpAgent: new http.Agent({ keepAlive: true }),
+          httpsAgent: new https.Agent({ keepAlive: true }),
+
+          // 'proxy' 定义代理服务器的主机名称和端口
+          // `auth` 表示 HTTP 基础验证应当用于连接代理，并提供凭据
+          // 这将会设置一个 `Proxy-Authorization` 头，覆写掉已有的通过使用 `header` 设置的自定义 `Proxy-Authorization` 头。
+          proxy: {
+            host: '127.0.0.1',
+            port: 9000,
+            auth: {
+              username: 'mikeymike',
+              password: 'rapunz3l'
             }
-        });
-    })();
-    FAIL_STRING ":" {\
-            "success\":false}",
-            "curPage": 1,
-            "data": [{
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 1,
-                        "title": "浪迪图2017女夏新款高腰<span class=H>牛仔短裤</span>女毛边宽松A字阔腿胖MM显瘦热裤",
-                        "storeId": 741252391,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": true,
-                        "sales": "1342",
-                        "itemLoc": "广东 东莞",
-                        "itemId": 530270292606,
-                        "picUrl": "//g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i1/142770212320494823/TB2wL8NopXXXXXwXFXXXXXXXXXX_!!0-saturn_solar.jpg",
-                        "price": "99.00",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 1,
-                            "rank": 1,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "浪迪图旗舰店",
-                        "keyword": "牛仔短裤",
-                        "tmall": true,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 2,
-                        "title": "逸阳女裤2017夏新款韩版<span class=H>牛仔</span><span class=H>短裤</span>时尚破洞直筒裤女显瘦热裤薄0067",
-                        "storeId": 408107205,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "6488",
-                        "itemLoc": "河南 郑州",
-                        "itemId": 546803895455,
-                        "picUrl": "//g-search3.alicdn.com/img/bao/uploaded/i4/i2/TB1pdIhRpXXXXceXVXXXXXXXXXX_!!0-item_pic.jpg",
-                        "price": "116.10",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 2,
-                            "rank": 2,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "逸阳旗舰店",
-                        "keyword": "牛仔短裤",
-                        "tmall": true,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 3,
-                        "title": "七格格2017春夏新款韩版复古卷边显瘦宽松热裤阔腿<span class=H>牛仔</span><span class=H>短裤</span>女潮",
-                        "storeId": 394695430,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "5065",
-                        "itemLoc": "浙江 杭州",
-                        "itemId": 545385877089,
-                        "picUrl": "//g-search1.alicdn.com/img/bao/uploaded/i4/i3/TB17SCOPVXXXXcJXXXXXXXXXXXX_!!0-item_pic.jpg",
-                        "price": "93.40",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 3,
-                            "rank": 3,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "七格格旗舰店",
-                        "keyword": "牛仔短裤",
-                        "tmall": true,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 4,
-                        "title": "大码宽松中裤<span class=H>牛仔</span><span class=H>短裤</span>男夏季薄款破洞七分裤男直筒大号马裤五分裤",
-                        "storeId": 2860334289,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "10",
-                        "itemLoc": "广东 广州",
-                        "itemId": 534682497715,
-                        "picUrl": "//g-search2.alicdn.com/img/bao/uploaded/i4/i3/2860334289/TB2VJ9GtXXXXXcZXXXXXXXXXXXX_!!2860334289.jpg",
-                        "price": "39.90",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 4,
-                            "rank": 4,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "以森服装贸易",
-                        "keyword": "牛仔短裤",
-                        "tmall": false,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 5,
-                        "title": "2017春夏新款<span class=H>牛仔</span>裤<span class=H>短裤</span>大码女装胖mm破洞韩版学生宽松毛边热裤",
-                        "storeId": 2256423792,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "4",
-                        "itemLoc": "广东 广州",
-                        "itemId": 546431871021,
-                        "picUrl": "//g-search3.alicdn.com/img/bao/uploaded/i4/i1/TB1vwesPXXXXXXraXXXXXXXXXXX_!!0-item_pic.jpg",
-                        "price": "95.00",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 5,
-                            "rank": 5,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "芳梅姐姐j",
-                        "keyword": "牛仔短裤",
-                        "tmall": false,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 6,
-                        "title": "夏季新款外贸原单四分<span class=H>牛仔</span>裤女中高腰大码三四分裤宽松显瘦阔腿裤",
-                        "storeId": 689678984,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "48",
-                        "itemLoc": "广东 广州",
-                        "itemId": 551072954233,
-                        "picUrl": "//g-search1.alicdn.com/img/bao/uploaded/i4/i3/689678984/TB2srZ2pRNkpuFjy0FaXXbRCVXa_!!689678984.jpg",
-                        "price": "45.00",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 6,
-                            "rank": 6,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "yuyiroger",
-                        "keyword": "牛仔短裤",
-                        "tmall": false,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 7,
-                        "title": "轻奢品GPPNKC 夏破洞渔网<span class=H>短裤</span><span class=H>牛仔</span>裤宽松阔腿裤高腰网格拼接热裤",
-                        "storeId": 2654503669,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "0",
-                        "itemLoc": "上海",
-                        "itemId": 552851065240,
-                        "picUrl": "//g-search2.alicdn.com/img/bao/uploaded/i4/i4/TB1XEWMRFXXXXaHXpXXXXXXXXXX_!!0-item_pic.jpg",
-                        "price": "1432.64",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 7,
-                            "rank": 7,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "gppnkc旗舰店",
-                        "keyword": "牛仔短裤",
-                        "tmall": true,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"
-                        }
-                    }, {
-                        "rankType": {
-                            "code": "zonghe",
-                            "desc": "综合"
-                        },
-                        "index": 8,
-                        "title": "夏季<span class=H>牛仔</span><span class=H>短裤</span>韩版宽松水洗蓝色怀旧翻边<span class=H>牛仔</span>卷边<span class=H>短裤</span>翻边<span class=H>短裤</span>",
-                        "storeId": 2264327959,
-                        "type": {
-                            "code": "taobao",
-                            "desc": "淘宝"
-                        },
-                        "p4p": false,
-                        "sales": "0",
-                        "itemLoc": "安徽 蚌埠",
-                        "itemId": 538049279322,
-                        "picUrl": "//g-search3.alicdn.com/img/bao/uploaded/i4/i1/TB1tfquLXXXXXX2XFXXXXXXXXXX_!!0-item_pic.jpg",
-                        "price": "29.90",
-                        "rank": {
-                            "crawLoc": "广东",
-                            "pageIndex": 1,
-                            "NOT_FOUND": -1,
-                            "NOT_EXIST": -2,
-                            "cacheHit": false,
-                            "index": 8,
-                            "rank": 8,
-                            "location": {
-                                "code": "main",
-                                "desc": "左边"
-                            }
-                        },
-                        "storeName": "多美好服装阁",
-                        "keyword": "牛仔短裤",
-                        "tmall": false,
-                        "device": {
-                            "code": "pc",
-                            "desc": "电脑端"…
-                            sc ":"
-                            电脑端 "}},{"
-                            rankType ":{"
-                            code ":"
-                            zonghe ","
-                            desc ":"
-                            综合 "},"
-                            index ":29,"
-                            title ":"
-                            原宿风韩版 < span class = H > 短裤 < /span>女夏潮宽松学生bf ulzzang高腰破洞<span class=H>牛仔</span > 阔腿裤热裤 ","
-                            storeId ":3244195722,"
-                            type ":{"
-                            code ":"
-                            taobao ","
-                            desc ":"
-                            淘宝 "},"
-                            p4p ":false,"
-                            sales ":"
-                            0 ","
-                            itemLoc ":"
-                            广东 广州 ","
-                            itemId ":552886970646,"
-                            picUrl ":" //g-search2.alicdn.com/img/bao/uploaded/i4/i3/TB1aO20RXXXXXbbaXXXXXXXXXXX_!!0-item_pic.jpg","price":"32.99","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":29,"rank":29,"location":{"code":"main","desc":"左边"}},"storeName":"空城7704","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":30,"title":"Hi韩都衣舍韩版女装2017夏装新款微喇字母翻边<span class=H>牛仔</span><span class=H>短裤</span>GQ8179發","storeId":1240679,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"0","itemLoc":"山东 济南","itemId":552747117176,"picUrl":"//g-search2.alicdn.com/img/bao/uploaded/i4/i3/TB1t3WURpXXXXXPXVXXXXXXXXXX_!!0-item_pic.jpg","price":"96.00","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":30,"rank":30,"location":{"code":"main","desc":"左边"}},"storeName":"qshfr","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":31,"title":"好质量8008#必入款 很正的<span class=H>牛仔</span>色高腰<span class=H>短裤</span> 百搭爆表","storeId":1699140526,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"0","itemLoc":"广东 广州","itemId":549159035352,"picUrl":"//g-search3.alicdn.com/img/bao/uploaded/i4/i4/1699140526/TB2pxhSmB0lpuFjSszdXXcdxFXa_!!1699140526.jpg","price":"34.00","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":31,"rank":31,"location":{"code":"main","desc":"左边"}},"storeName":"永远的星星h","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":32,"title":"韩版新款女装<span class=H>牛仔</span>裤女显瘦高腰休闲<span class=H>牛仔</span><span class=H>短裤</span>女夏季百搭破洞热裤潮","storeId":81452,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"0","itemLoc":"浙江 台州","itemId":552882686836,"picUrl":"//g-search2.alicdn.com/img/bao/uploaded/i4/i2/TB1XypMRFXXXXadXpXXXXXXXXXX_!!2-item_pic.png","price":"49.00","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":32,"rank":32,"location":{"code":"main","desc":"左边"}},"storeName":"xucou1222","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":33,"title":"时尚卷边<span class=H>牛仔</span><span class=H>短裤</span>女夏休闲宽松韩版学生阔腿显瘦热裤破洞百搭裤子","storeId":1794443707,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"0","itemLoc":"广东 东莞","itemId":549675999078,"picUrl":"//g-search2.alicdn.com/img/bao/uploaded/i4/i2/1794443707/TB2OfEPnbBkpuFjy1zkXXbSpFXa_!!1794443707.jpg","price":"49.00","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":33,"rank":33,"location":{"code":"main","desc":"左边"}},"storeName":"步步先生","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":34,"title":"<span class=H>牛仔</span><span class=H>短裤</span>男夏天青年五分中裤时尚破洞潮裤牌补丁乞丐涂鸦","storeId":3015291652,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"0","itemLoc":"广东 广州","itemId":549955760642,"picUrl":"//g-search2.alicdn.com/img/bao/uploaded/i4/i2/3015291652/TB2z8H6n1J8puFjy1XbXXagqVXa_!!3015291652.jpg","price":"87.00","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":34,"rank":34,"location":{"code":"main","desc":"左边"}},"storeName":"t_1489035531442_0628","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":35,"title":"2017夏季新款韩版女式个性显瘦磨白印花破洞<span class=H>牛仔</span>大码宽松休闲<span class=H>短裤</span>","storeId":2838200089,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"0","itemLoc":"广东 广州","itemId":538271224871,"picUrl":"//g-search3.alicdn.com/img/bao/uploaded/i4/i1/TB1k3OFOXXXXXXbXpXXXXXXXXXX_!!0-item_pic.jpg","price":"43.70","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":35,"rank":35,"location":{"code":"main","desc":"左边"}},"storeName":"完美乐心","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}},{"rankType":{"code":"zonghe","desc":"综合"},"index":36,"title":"红人大爱性感无敌显腿长<span class=H>牛仔</span><span class=H>短裤</span>百搭翘臀显瘦毛边浅色洗水热裤","storeId":3020177032,"type":{"code":"taobao","desc":"淘宝"},"p4p":false,"sales":"1","itemLoc":"浙江 杭州","itemId":551059227219,"picUrl":"//g-search1.alicdn.com/img/bao/uploaded/i4/i3/3020177032/TB2lX9hpMxlpuFjSszgXXcJdpXa_!!3020177032.jpg","price":"89.00","rank":{"crawLoc":"广东","pageIndex":1,"NOT_FOUND":-1,"NOT_EXIST":-2,"cacheHit":false,"index":36,"rank":36,"location":{"code":"main","desc":"左边"}},"storeName":"女神大妞","keyword":"牛仔短裤","tmall":false,"device":{"code":"pc","desc":"电脑端"}}],"success":true,"totalRows":1855008}"
-                            max_time: 5
-                            page: 1
-                            type: "查询成功"
-                            user_type: "4"
-                        }
-                    }
+          },
+
+          // `cancelToken` 指定用于取消请求的 cancel token
+          // （查看后面的 Cancellation 这节了解更多）
+          cancelToken: new CancelToken(function (cancel) {
+          })
+        }
     </script>
 </body>
-
 </html>
