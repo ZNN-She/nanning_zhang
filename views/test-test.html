@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-   <script type="text/javascript" src="../plugins/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="../plugins/jQuery/jquery.js"></script>
 </head>
+
 <body>
     <div id="div">div</div>
     <button id="button">button</button>
     <a id="a" href="#">aaa</a>
     <div id="test">绑定事件</div>
     <script>
-      $("#div").on("click", function(){
+    $("#div").on("click", function() {
         alert("div");
-      });
-      $("#button").on("click", function(){
+    });
+    $("#button").on("click", function() {
         alert("button");
-      });
-      $("#a").on("click", function(){
+    });
+    $("#a").on("click", function() {
         alert("aaaa");
-      });
+    });
 
 
-      function alertBody(e){
+    function alertBody(e) {
         e.stopPropagation();
         e.preventDefault();
-        alert("body");
-        document.getElementsByTagName("body")[0].removeEventListener("click", alertBody,true);
-      }
-      $("#test").on("click", function(){
-        document.getElementsByTagName("body")[0].addEventListener("click", alertBody,true);
-      });
+        var mymessage = confirm("你喜欢javascript吗？");
+        if (mymessage == true) {
+            document.getElementsByTagName("body")[0].removeEventListener("click", alertBody, true);
+            e.target.click();
+        } else if (mymessage == false) {
+            // document.write("要学javascript，而且必须学");
+        }
+    }
+    $("#test").on("click", function() {
+        document.getElementsByTagName("body")[0].addEventListener("click", alertBody, true);
+    });
     </script>
 </body>
+
 </html>
