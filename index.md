@@ -23,7 +23,7 @@ Syntax highlighted code block
 
 **Bold** and _Italic_ and `Code` text
 
-[Link]./test.html)
+[Link](./test.html)
 
 [Link](url) and ![Image](src)
 ```
