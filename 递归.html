@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<div>
+		<button onclick="test1()">test1</button>
+	</div>
+	<script>
+		var mockData = [
+		    {
+		      name: '所有物品',
+		      num: 23,
+		      children: [
+		        {
+		          name: '水果',
+		          num: 1,
+		          children: [
+		          	{ 
+		          		name: '苹果', 
+		          		num: 133,
+		          		children: [
+		          			{ 
+		          				name: '青苹果',
+		          				num: 99
+		          			}, 
+		          			{ 
+		          				name: '红苹果',
+		          				num: 32,
+		          			}
+		          		] 
+		          	}
+		          ],
+		        },
+		        {
+		          name: '主食',
+		          num: 1,
+		          children: [
+		            { 
+		            	name: '米饭', 
+		            	num: 3,
+		            	children: [
+		            		{ name: '北方米饭', num: 23}, 
+		            		{ name: '南方米饭', num: 34}
+		            	] 
+		        	},
+		          ],
+		        },
+		        {
+		          name: '生活用品',
+		          num: 12,
+		          children: [
+		            { 
+		            	name: '电脑类',
+		            	num: 5, 
+		            	children: [
+		            		{ name: '联想电脑', num: 3}, 
+		            		{ name: '苹果电脑', num: 14}
+		            	] 
+		        	},
+		            { 
+		            	name: '工具类', 
+		            	num: 10,
+		            	children: [
+		            		{ name: '锄头', num: 2}, 
+		            		{ name: '锤子', num: -1}
+		            	] 
+		            },
+		            { 
+		            	name: '生活用品', 
+		            	num: 0,
+		            	children: [
+		            		{ name: '洗发水', num: 1 }, 
+		            		{ name: '沐浴露', num: 23 }
+	            		]
+		            },
+		          ],
+		        },
+		      ],
+		    },
+		    {
+		    	name: "哈哈哈",
+		    	num: 12
+		    }
+	    ];
+
+
+	    function recursive1(paramData){
+	    	
+	    	function processData(childrenData){
+	    		childrenData.forEach(function(item){
+	    			// 给每个对象增加一个id属性
+		    		item.id = Math.ceil(Math.random()*10000)
+		    		if(item.children){
+		    			processData(item.children);
+		    		}
+	    		})
+	    	}
+
+	    	var newData = JSON.parse(JSON.stringify(paramData));
+	    	processData(newData);
+	    	
+	    	return newData;
+	    }
+
+	    function test1() {
+	    	var resData = recursive1(mockData);
+	    	console.log(resData);
+	    }
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

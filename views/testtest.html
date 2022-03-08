@@ -28,94 +28,127 @@
     </style>
 </head>
 
-<body>
-    <div>输入
-        <input type="text" id="price-in">
+<script>
+  var accountApp = {};
+  var appCommon = {};
+  var appManage = {};
+  //公共信息存放
+  var commInfo = {};
+  var app = {};
+</script>
+<body class="antd-css-rewrite">
+<div class="smb-ui-wait-loading" id="waitLoading" style="z-index: 9999;"></div>
+
+<div id="main-wrapper" style="min-width: 1020px">
+
+</div>
+
+
+<!--菜单右边区域loading-->
+<div class="smb-ui-content-blank" id="globalContentLoading">
+  <div class="smb-ui-table-loading">数据加载中，请稍后...</div>
+</div>
+
+<!--全屏loading-->
+<div class="smb-ui-full-blank" id="globalFullLoading" onselectstart="return false;" style="-moz-user-select:none;">
+  <div class="smb-ui-table-loading"></div>
+</div>
+
+<ul class="page-aside">
+  <li class="xn-service" data-warden="warden-mng" data-warden-name="在线咨询-打开">
+    <div class="service-icon">
+      <img id="serviceImg" src="images/xn-service-on.png" alt="" style="position: relative;top: -1px;">
     </div>
-    <div>输出
-        <input type="text" id="price-out">
+    <div class="online-consultant-guide">
+      <div class="online-consultant-guide-close"></div>
+      <div class="online-consultant-guide-pic"></div>
+      <div class="online-consultant-guide-content">
+        <p class="online-consultant-guide-text">亲爱哒，您好！我是小亿，很高</p>
+        <p class="online-consultant-guide-text">兴为您服务，您可以点击右侧小</p>
+        <p class="online-consultant-guide-text">图标向我提问哦～</p>
+        <p class="online-consultant-guide-button">我要咨询</p>
+      </div>
     </div>
-    <button id="price-btn">输出</button>
-    <span id="time">aa</span>
-    <div class="center">
-        <h1>
-            1111
-        </h1>
-        <h1>
-            1111
-        </h1>
-        <h1>
-            1111
-        </h1>
-        <h1>
-            1111
-        </h1>
-    </div>
-    <div style="height: 200px;border: 1px solid #ddd;">
-        <div style="text-align: center;">
-            <div style="display: inline-block;">
-                <img src="https://img.alicdn.com/bao/uploaded/i1/TB1WusUJVXXXXa_XVXXXXXXXXXX_!!0-item_pic.jpg_60x60.jpg" alt="">
-            </div>
-            <div style="display: inline-block;vertical-align: top;line-height: 40px;">
-                <div>就的撒房价爱神的箭发送到附近</div>
-                <div>就的撒房价爱神的箭发送到附近</div>
-                <div>就的撒房价爱神的箭发送到附近</div>
-            </div>
-        </div>
-        <a href="" target="_blank"></a>
-    </div>
-    <div style="width: "></div>
-    <!-- 第三方库 -->
-    <script src="../plugins/jQuery/jquery-2.1.4.js"></script>
+  </li>
+  <li class="feedback" id="sideOpenHelp" data-warden="warden-mng" data-warden-name="服务中心">
+    <div class="Dbs"><i class="iconfont icon-bangzhu" style="font-size: 24px;"></i></div>
+    <div class="feedback-text">服务中心</div>
+    <!--20170309版本意见反馈新加-->
+    <div class="feedback-msg-num" style="display: none;"></div>
+  </li>
+  <li class="side-hide" id="hideSide">
+    <i class="iconfont icon-right" style="padding-left: 3px;"></i>
+  </li>
+</ul>
+<div class="side-show" id="showSide"><i class="iconfont icon-zuo"></i></div>
+
+<div class="modal newFunctionModal" id="updateModal" data-backdrop="static">
+  <div class="modal-dialog modal-sm" style="max-height: 500px; width: 778px;top: 25px;">
+    <div class="modal-content">
+      <div class="modal-header login-header">
+
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                class="sr-only">Close</span></button>
+        <h4 class="modal-title"><i class="iconfont icon-lingdang" style="color: #F0AD4E;"></i> <span style="font-size: 14px" id="msgTitle"></span></h4>
+      </div>
+      <div class="modal-body">
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <script id="1" src="http://dev-91lyd.com:8070/common/loader.js?v=20190829,http://dev-91lyd.com:8070/common/dist/base/js/commonLib.js"></script>
+    <script id="2" src=""></script>
+    <script id="3" src=""></script>
+    <script id="4" src=""></script>
+    <script id="5" src=""></script>
+    <script id="6" src=""></script>
+    <script id="7" src=""></script>
+    <script id="8" src=""></script>
+    <script id="9" src=""></script>
+    <script id="10" src=""></script>
+    <script id="11" src=""></script>
+    <script id="12" src=""></script>
+    <script id="13" src=""></script>
+    <script id="14" src=""></script>
+    <script id="15" src=""></script>
+    <script id="16" src=""></script>
+    <script id="17" src=""></script>
+    <script id="18" src=""></script>
+    <script id="19" src=""></script>
+    <script id="20" src=""></script>
     <script>
-    (function() {
-        $("#price-btn").on("click", function() {
-            console.log(1);
-        });
-        $("#price-btn").on("click", function() {
-            console.log(2);
-        });
-        document.getElementById("price-btn").onclick = function() {
-            console.log(3);
+        var srcArr = [
+            "http://dev-91lyd.com:8070/common/loader.js?v=20190829",
+            "http://dev-91lyd.com:8070/common/dist/base/js/commonLib.js",
+            "http://dev-91lyd.com:8070/common/dist/base/js/commonBusi.js",
+            "http://dev-91lyd.com:8070/common/dist/base/js/template.js",
+            "http://dev-91lyd.com:8070/common/dist/busi/js/commonVendor.js",
+            "http://dev-91lyd.com:8070/common/dist/busi/js/tags.js",
+            "http://dev-91lyd.com:8070/manage/dist/es5-js/vendor.js",
+            "http://dev-91lyd.com:8070/manage/dist/es5-js/template.js",
+            "http://dev-91lyd.com:8070/manage/dist/es5-js/app.js",
+            "http://dev-91lyd.com:8070/manage/dist/es6-js/manageVendor.js",
+            "http://dev-91lyd.com:8070/manage/dist/es6-js/manageMain.js",
+            "http://dev-91lyd.com:8070/empower/es6-js/empowerMain.6985f9cd2a11830f.js",
+            "http://dev-91lyd.com:8070/empower/es5-js/app-22def1c0c9.js",
+            "http://dev-91lyd.com:8070/empower/es5-js/sdk-1a48db106f.js",
+            "http://dev-91lyd.com:8070/empower/es5-js/renewal-a7e9dcee1a.js",
+            "http://dev-91lyd.com:8070/mainPage/dist/js/mainPageVendor.js",
+            "http://dev-91lyd.com:8070/mainPage/dist/js/main.js",
+            "http://dev-91lyd.com:8070/manage/flexibleLib/echarts-2.34.0.min.js",
+            "http://hummer-front.base-service-test.sit.91lyd.com/hummer-front/front/verification/main.js",
+            "http://hummer-front.base-service-test.sit.91lyd.com/hummer-front/front/verification/static/js/main.eded7cca.js"
+        ];
+        var div = document.createElement('div');;
+        for(var i = 1; i <= 20; i++){
+            var item = document.createElement("script");
+            item.setAttribute('type', 'text/javascript');
+            item.setAttribute('src', srcArr[i-1]);
+            div.appendChild(item)
         }
-        document.getElementById("price-btn").onclick = function() {
-            console.log(4);
-        }
-
-        function a() {
-            var i = 0;
-
-            function b() {
-                cosnole.log(++i);
-            }
-            return b;
-        }
-        var c = a();
-        c();
-    })();
-
-    (function() {
-        function getCharlen(s) {
-            return Function('return ' + s.split('').map(function(e) {
-                return e.charCodeAt(0) < 256 ? 1 : 2
-            }).join("+"))()
-        }
-
-        console.log(getCharlen('123中文abc')); //10
-    })();
-    {
-        code:"0",  // 0:成功 -1:未登录  -2:权限不够 -3:重定向 -4:参数错误
-        msg:"",
-        data:{
-            {
-                data:[],
-                count:Number,  //总数据条数
-                page:Number,  //返回的第几页数据
-                pageSize:Number //每页显示的条数
-            }
-        }
-    }
-
+        // document.body.appendChild(div);
     </script>
 </body>
 

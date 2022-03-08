@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>遮罩引导</title>
+</head>
+<body>
+
+	<div id="need-guide" 
+		style="width: 300px; height: 100px; position: absolute; top: 100px; left: 300px; background: #ddd;">
+		需要引导的元素
+	</div>
+	<div id="need-guide2" 
+		style="width: 100px; height: 50px;">
+		需要引导的元素2
+	</div>
+	<div id="need-guide3" 
+		style="width: 100px; height: 50px;">
+		需要引导的元素2
+	</div>
+
+	<button onclick="startGuide()">开始引导</button>
+	
+
+	<script>
+		(function(window){
+
+			function _createMaskEle () {
+
+				var ele = window.document.createElement("div")
+				ele.setAttribute("id", "maskGuide_mask");
+				ele.style.position = "fixed";
+				ele.style.left = 0;
+				ele.style.top = 0;
+				ele.style.right = 0;
+				ele.style.bottiom = 0;
+				ele.style.height = "100%";
+				ele.style.width = "100%";
+				ele.style.background = "#000";
+				ele.style.opacity = 0.7;
+				ele.style.zIndex = 999;
+
+				return ele;
+			}
+
+			function _createGuideContainerEle(option) {
+
+				var ele = window.document.createElement("div")
+				ele.setAttribute("id", "maskGuide_guide");
+
+				var size = _getGuideSize(option);
+				var position = _getGuidePosition(option);
+
+				ele.style.position = "fixed";
+				// ele.style.overflow = "hidden";
+				ele.style.background = "#fff";
+				ele.style.width = size.width + "px";
+				ele.style.height = size.height + "px";
+				ele.style.left = position.x + "px";
+				ele.style.top = position.y + "px";
+
+				var guideEle = _createGuideEle(option);
+				ele.appendChild(guideEle);
+
+				if(option.explain){
+					var explainEle = _createExplainEle(option);
+
+					ele.appendChild(explainEle);
+				}
+
+				if(option.showNext || option.showClose){
+					var actionEle = _createActionEle(option);
+					ele.appendChild(actionEle);
+				}
+
+				return  ele;
+			};
+
+			function _createGuideEle(option) {
+
+				var ele = window.document.createElement("div")
+				ele.setAttribute("id", "maskGuide_guide");
+				ele.addEventListener("click", option.selfClickCallback)
+
+				var size = _getGuideSize(option);
+
+				ele.style.background = "#fff";
+				ele.style.boxShadow = "0px 0px 10px #fff";
+				ele.style.width = size.width + "px";
+				ele.style.height = size.height + "px";
+
+
+				return  ele;
+			};
+
+			function _createActionEle(option) {
+
+				var ele = window.document.createElement("div")
+				ele.setAttribute("id", "maskGuide_action");
+
+				var nextBtn = window.document.createElement("button");
+				var clsoeBtn = window.document.createElement("button");
+
+				nextBtn.innerHTML = option.nextCallbackText;
+				clsoeBtn.innerHTML = option.closeCallBackText;
+
+				nextBtn.addEventListener("click", option.nextCallback);
+				clsoeBtn.addEventListener("click", option.closeCallBack);
+
+				nextBtn.style.float = "right";
+				nextBtn.style.marginLeft = "10px";
+				clsoeBtn.style.float = "right";
+
+				ele.appendChild(nextBtn);
+				ele.appendChild(clsoeBtn);
+
+				return  ele;
+			};
+
+			function _createExplainEle(option) {
+
+				var ele = window.document.createElement("div");
+				ele.setAttribute("id", "maskGuide_explain");
+				ele.style.position = "relative";
+				ele.style.paddingTop = "8px";
+
+				var explainEle = window.document.createElement("div");
+				explainEle.style.background = "#fff";
+				explainEle.style.position = "relative";
+				explainEle.style.boxShadow = "0px 0px 10px #fff";
+				if(Object.prototype.toString.call(option.explain) !== "[object String]"){
+					explainEle.appendChild(option.explain);
+				}else{
+					explainEle.innerHTML = option.explain;
+				}
+
+				var jiantouEle = window.document.createElement("div");
+				jiantouEle.style.border = "8px solid transparent";
+				jiantouEle.style.borderBottomColor = "#FFF";
+				jiantouEle.style.width = 0;
+				jiantouEle.style.height = 0;
+				jiantouEle.style.marginTop = "-15px";
+				jiantouEle.style.marginLeft = "4px";
+				jiantouEle.style.position = "absolute";
+
+				ele.appendChild(jiantouEle);
+				ele.appendChild(explainEle)
+
+				return ele;
+
+			};
+
+			function _getGuidePosition(option) {
+
+				var x = option.width || option.el.getBoundingClientRect().x;
+				var y = option.width || option.el.getBoundingClientRect().y;
+
+				return {
+					x: x,
+					y: y
+				}
+
+			}
+
+			function _getGuideSize(option) {
+
+				var width = option.width || option.el.getBoundingClientRect().width;
+				var height = option.width || option.el.getBoundingClientRect().height;
+
+				return {
+					width: width,
+					height: height
+				}
+
+			}
+
+			function _clear() {
+				if(document.getElementById("maskGuide_guide")){
+					window.document.body.removeChild(document.getElementById("maskGuide_mask"));
+				}
+			}
+
+			var DEFAULT = {
+				el: null,
+				width: null,
+				height: null,
+				top: null,
+				left: null,
+				selfClickCallback: _clear,
+				nextCallback: _clear,
+				closeCallBack: _clear,
+				nextCallbackText: "下一步",
+				closeCallBackText: "跳过",
+				showNext: true,
+				showClose: false,
+				explain: null
+			};
+
+			function maskGuide (options, nextCallback, closeCallBack) {
+
+				_clear();
+
+				var option = Object.assign({}, DEFAULT, options);
+				if(!(options instanceof Object)){
+					option.el = options;
+					option.nextCallback = nextCallback || option.nextCallback;
+					option.closeCallBack = closeCallBack || option.closeCallBack;
+				}
+
+				// el 可以是id或者dom元素
+				if(typeof option.el === "string"){
+					var ele = document.getElementById(option.el);
+
+					option.el = ele;
+				}
+
+				if(!option.el){
+
+					var errorMsg = "options Element or id not found. not found need guide element";
+					console.error(errorMsg);
+
+					return errorMsg;
+				}
+
+				var maskEle = _createMaskEle();
+				var guideEle = _createGuideContainerEle(option);
+
+				maskEle.appendChild(guideEle);
+				
+				window.document.body.appendChild(maskEle);
+
+				return maskEle;
+
+			};
+
+
+			window.maskGuide = maskGuide;
+		})(window)
+	</script>
+	<script>
+
+		function startGuide() {
+			window.maskGuide("need-guide2", startGuide2)
+		}
+
+		function startGuide2(){
+			window.maskGuide("need-guide3", startGuide3)
+		}
+		function startGuide3(){
+			var ele = window.document.createElement("div");
+			var child1 = window.document.createElement("div");
+			child1.innerHTML = "option.explain";
+			var child2 = window.document.createElement("div");
+			child2.innerHTML = "option.explain";
+			var child3 = window.document.createElement("div");
+			child3.innerHTML = "option.explain";
+			ele.appendChild(child1);
+			ele.appendChild(child2);
+			ele.appendChild(child3);
+			window.maskGuide({el:"need-guide",explain:ele})
+		}
+	</script>
+</body>
+</html>

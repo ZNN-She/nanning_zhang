@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>散点图示例</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <style type="text/css">
+  html, body {
+    width: 100%;
+    height: 100%;
+  }
+  * {
+    margin: 0px;
+    padding: 0px;
+  }
+  button {
+    width: 100px;
+    border: 1px solid #555;
+  }
+  #container {
+    height: 90%;
+  }
+  </style>
+  <script charset="utf-8" src="https://map.qq.com/api/js?v=2.exp&libraries=visualization&key=4YUBZ-QABK6-TR4SI-MJF6R-LW3GS-2VF3Q"></script>
+  <script>
+  window.onload = function(){
+    // 创建地图
+    var map = new qq.maps.Map(document.getElementById("container"), {
+      center: new qq.maps.LatLng(43.3,88.3),
+      zoom: 5
+    });
+    // 创建散点图对象
+    var dots = new qq.maps.visualization.Dots({
+      map: map, // 必填参数，指定显示散点图的地图对象
+      style: {
+        fillColor: "#3CF",
+        strokeColor: "#00C",
+        strokeWidth: 1,
+        radius: 8
+      }
+    });
+    // 获取散点数据
+    // var data = getDotsData(10);
+    // 向散点图传入数据
+    // dots.setData(data);
+
+    // 监听button事件，更改散点图配置参数
+    document.getElementById("setOptions").addEventListener("click", function(e) {
+      var target = e.target;
+      switch (target.id) {
+        case "show":
+          if (dots.visible) {
+            dots.hide(); // 显示散点图
+          } else {
+            dots.show(); // 隐藏散点图
+          }
+          break;
+        case "data":
+          data = getDotsData();
+          dots.setData(data); // 重置散点图数据
+          break;
+        case "style":
+          var style = dots.getStyle(); // 获取点样式
+          style = {
+            fillColor: {
+              0: "rgba(255, 0, 0, 1)",
+              0.2: "rgba(255, 0, 0, 0.7)",
+              0.5: "rgba(255, 0, 0, 0.3)",
+              1: "rgba(255, 0, 0, 0)"
+            },
+            strokeWidth: 0
+          };
+          dots.setStyle(style); // 设置点样式
+          break;
+        case "group":
+          var groupBy = "type";
+          dots.setGroupStyle("a", {
+            fillColor: "#0D0",
+          });
+          dots.setGroupStyle("b", {
+            fillColor: "#FA3"
+          });
+          dots.setGroupBy(groupBy);
+          break;
+        default:
+      }
+    });
+
+    
+      
+      var addressLocation = [];
+      var typeIds = ["a", "b", "c"];
+      var geocoder = new qq.maps.Geocoder({
+          complete : function(result){
+            addressLocation.push({
+              lat: result.detail.location.lat,
+              lng: result.detail.location.lng,
+              type: typeIds[Math.floor(Math.random() * 3)]
+            });
+            console.log(addressLocation);
+            dots.setData(addressLocation);
+          }
+      });
+      var addressList = [
+        "新疆维吾尔自治区,乌鲁木齐市,新市区",
+        "新疆维吾尔自治区,乌鲁木齐市,米东区",
+        "新疆维吾尔自治区,乌鲁木齐市,开发区",
+        "新疆维吾尔自治区,乌鲁木齐市,天山区",
+        "新疆维吾尔自治区,乌鲁木齐市,市辖区",
+        "新疆维吾尔自治区,乌鲁木齐市,沙依巴克区",
+        "新疆维吾尔自治区,乌鲁木齐市,新市区",
+        "新疆维吾尔自治区,乌鲁木齐市,水磨沟区",
+        "新疆维吾尔自治区,乌鲁木齐市,头屯河区",
+        "新疆维吾尔自治区,乌鲁木齐市,达坂城区",
+        "新疆维吾尔自治区,乌鲁木齐市,高新技术产业开发区",
+        "新疆维吾尔自治区,乌鲁木齐市,经济技术开发区",
+        "新疆维吾尔自治区,乌鲁木齐市,乌鲁木齐县",     
+        "新疆维吾尔自治区,吐鲁番地区,吐鲁番市",
+        "新疆维吾尔自治区,吐鲁番地区,托克逊县",
+        "新疆维吾尔自治区,吐鲁番地区,鄯善县",
+        "新疆维吾尔自治区,克拉玛依市,市辖区",
+        "新疆维吾尔自治区,克拉玛依市,独山子区",
+        "新疆维吾尔自治区,克拉玛依市,克拉玛依区",
+        "新疆维吾尔自治区,克拉玛依市,白碱滩区",
+        "新疆维吾尔自治区,克拉玛依市,乌尔禾区",
+        "新疆维吾尔自治区,哈密地区,哈密市",
+        "新疆维吾尔自治区,哈密地区,伊吾县",
+        "新疆维吾尔自治区,哈密地区,巴里坤哈萨克自治县"
+      ];
+      var i = 0;
+      setTimeout(function(){
+        var mySetInterval = setInterval(function(){
+          if(i < addressList.length){
+            geocoder.getLocation(addressList[i]);
+            i ++;
+          }else{
+            clearInterval(mySetInterval)
+          }
+        }, 110);
+      }, 2000)
+  }
+  </script>
+</head>
+<body>
+  <div id="container"></div>
+  <div id="setOptions">
+    <button id="show">显示/隐藏</button>
+    <button id="data">更新数据</button>
+    <button id="style">改变点样式</button>
+    <button id="group">分组显示</button>
+  </div>
+</body>
+</html>

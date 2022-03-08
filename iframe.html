@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iframe</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./scripts/iframe.js"></script>
+    <script>
+    (function() {
+        var iframe2 = znnCreateIframe({
+            name: "iframe2",
+            id: "iframe2",
+            src: "http://hn.znn.com:9000/iframe2.html",
+            scrolling: "no",
+            frameborder: "0"
+        });
+        document.getElementsByTagName("body")[0].appendChild(iframe2);
+
+
+        znnAddEventListenerMessage(window, function(event) {
+            console.log("iframe接受到iframe2的消息--" + event.data.message);
+
+            znnPostMessage(iframe2.contentWindow, { message: "iframe接受到ifram2消息然后回信" }, "http://hn.znn.com:9000");
+
+            if (event.data.type === "getLocalStorage") {
+                znnPostMessage(iframe2.contentWindow, {
+                    message: "iframe接受到ifram2消息然后回信",
+                    bb: getLocalStorage(),
+                    type:"getLocalStorage"
+                }, "http://hn.znn.com:9000");
+                // iframe2.contentWindow.postMessage({message:getLocalStorage()}, "*");
+            }
+        });
+
+        function getLocalStorage() {
+            var storage = {};
+            for(var key in localStorage){
+                if(typeof(localStorage[key]) !== "function"){
+                    storage[key] = localStorage[key];
+                }
+            }
+            return storage;
+        }
+        con
+    })(jQuery);
+    </script>
+</body>
+
+</html>

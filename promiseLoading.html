@@ -353,6 +353,12 @@
             return dtd.promise(); //此处也可以直接返回dtd
         };
 
+        function ajax2() {
+            let promise = Promise();
+            setTimeout(promise.resolve, 2000);
+            return promise;
+        }
+
         $("#button").on("click", function() {
             //loading
             var loading = ajax();
@@ -361,7 +367,8 @@
         })
         $("#button2").on("click", function() {
             //loading
-            var loading = ajax();
+            // var loading = ajax();
+            var loading = ajax2();
             $("#table2").loading(loading);
         })
         $("#button3").on("click", function() {

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>render</title>
+</head>
+<body>
+<div id="root">
+
+</div>
+<script>
+    function render(option) {
+        var dom = document.createElement(option.name);
+        //设置 div 属性，如 id
+        for(var key in option.attr){
+            dom.setAttribute(key, option.attr[key]);
+        }
+        //style
+        for(var key in option.style){
+            dom.style[key] = option.style[key];
+        }
+        //content 文本文档
+        if(["input","textarea", "img"].indexOf(option.name) === -1){
+            dom.innerHTML = option.content;
+        }
+        if(option.child){
+            dom.append(render(option.child));
+        }
+        return dom;
+    }
+</script>
+<script>
+
+
+    var test = {
+        type: "div",
+        props: {
+            id: "",
+            name: "",
+            children: {
+                type: "span",
+                props: {
+                    children: "123"
+                }
+            }
+        }
+    }
+
+
+
+    var option = {
+        name:"div",
+        content:"parent",
+        style:{
+            background:"#ddd",
+            width:"500px",
+            height:"500px"
+        },
+        attr:{
+            id:"parent",
+            className:"parent",
+            "data-name":"parent",
+        },
+        child:{
+            name:"div",
+            content:"child",
+            style:{
+                background:"red",
+                width:"300px",
+                height:"300px"
+            },
+            attr:{
+                id:"child",
+                class:"child",
+                "data-name":"child",
+            },
+            child:{
+                name:"img",
+                content:"grandchild",
+                id:"grandchild",
+                class:"grandchild",
+                attr:{
+                    value:"value",
+                    src:"./images/1.png"
+                },
+                style:{
+                    display:"block",
+                    height:"100px",
+                    width:"100px",
+                    background:"#fff"
+                }
+            }
+        }
+    };
+    document.getElementById("root").appendChild(render(option));
+</script>
+</body>
+</html>

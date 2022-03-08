@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>收集上才有效果</title>
+</head>
+<body>
+	<div id="body" style="position: absolute;left: 0;top: 0;right: 0;bottom: 0;overflow: auto;background-color: #dd0;">
+		<div id="touch" style="width: 200px;height: 200px;background-color: #ddd;word-break:break-all;overflow-y: auto;">
+		
+		</div>
+	</div>
+	<script>
+		var touch1 = null;
+		var touch2 = null;
+		var touchEle = document.getElementById("touch");
+		var diffStartW = 0;
+		var diffStartH = 0;
+		var eleDefaultW = parseInt(touchEle.style.width);
+		var eleDefaultH = parseInt(touchEle.style.height);
+
+		document.getElementById("body").addEventListener("touchstart", handleStart, false);
+  		document.getElementById("body").addEventListener("touchend", handleEnd, false);
+  		document.getElementById("body").addEventListener("touchmove", handleMove, false);
+
+  		function handleStart(event) {
+  			touch1 = event.touches[0];
+  			touch2 = event.touches[1];
+  			if(touch2){
+  				event.preventDefault();
+  				diffStartW = Math.abs(touch2.screenX - touch1.screenX);
+  				diffStartH = Math.abs(touch2.screenY - touch1.screenY);
+  				eleDefaultW = parseInt(touchEle.style.width);
+				eleDefaultH = parseInt(touchEle.style.width);
+  				touchEle.append(`${diffStartW},${diffStartH};`)
+  			}
+  			touchEle.append("start")
+  			console.log(event.touches);
+  		}
+  		function handleEnd(event){
+			touch1 = null;
+  			touch2 = null;
+  			touchEle.append("end")
+  		}
+  		function handleMove(event){
+  			touch1 = event.touches[0];
+  			touch2 = event.touches[1];
+  			if(touch2){
+  				event.preventDefault();
+				var nowW = Math.abs(touch2.screenX - touch1.screenX);
+				var nowH = Math.abs(touch2.screenY - touch1.screenY);
+				var diffW = nowW - diffStartW;
+				var diffH = nowH - diffStartH;
+				touchEle.style.width = eleDefaultW + diffW + "px";
+				touchEle.style.height = eleDefaultH + diffH + "px";
+				touchEle.append(`${touch2.screenX},${touch2.screenY},${touch1.screenX}, ${touch1.screenY};`)
+				// touchEle.append(`${nowW},${nowH};`)
+			}
+  		}
+	</script>
+</body>
+</html>

@@ -162,7 +162,7 @@ var zSnake = (function() {
             r2 = Number(arg2.toString().replace(".", ""));
 
             return this.floatMul((r1 / r2),Math.pow(10, t2 - t1));
-        }
+        },
         // 是否是ie -1:不是 6/7/8/9/10/11/edge:对应浏览器版本
         IEVersion: function () {
             var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
@@ -191,6 +191,79 @@ var zSnake = (function() {
             }else{
                 return -1;//不是ie浏览器
             }
+        },
+        // data: Array|Object
+        function transformTozTreeFormat(options) {
+            var DEFAULTS = {
+                rootPId: 0,
+                idKey: "id",
+                nameKey: "name",
+                pIdKey: "pId",
+                childrenKey: "children",
+                nodeSource: []       //节点数据
+            };
+            function _extend (obj1, obj2, type){
+                var obj = obj1;
+                if(type){
+                    obj = {};
+                }
+                for(var key in obj1){
+                    obj[key] = obj1[key]
+                }
+                for(var key in obj2){
+                    obj[key] = obj2[key]
+                }
+                return obj;
+            }
+            var config = _extend({}, DEFAULTS);
+            var dataList = []
+            if(Object.prototype.toString.apply(options) === "[object Object]"){
+                config = _extend(config, options);
+                dataList = options.nodeSource;
+            }else if (Object.prototype.toString.apply(options) === "[object Array]"){
+                dataList = options;
+            }
+            var i, l,
+                key = config.idKey,
+                parentKey = config.pIdKey,
+                childKey = config.childrenKey;
+            if (!key || key == "" || !options) return [];
+
+            if (Object.prototype.toString.apply(dataList) === "[object Array]") {
+                var r = [];
+                var tmpMap = {};
+                for (i = 0, l = dataList.length; i < l; i++) {
+                    tmpMap[dataList[i][key]] = dataList[i];
+                }
+                for (i = 0, l = dataList.length; i < l; i++) {
+                    if (tmpMap[dataList[i][parentKey]] && dataList[i][key] != dataList[i][parentKey]) {
+                        if (!tmpMap[dataList[i][parentKey]][childKey])
+                            tmpMap[dataList[i][parentKey]][childKey] = [];
+                        tmpMap[dataList[i][parentKey]][childKey].push(dataList[i]);
+                    } else {
+                        r.push(dataList[i]);
+                    }
+                }
+                return r;
+            } else {
+                return [dataList];
+            }
+        },
+        // 深copy
+        function deepCopy(obj) {
+            let objClone = Array.isArray(obj) ? [] : {};
+            if (obj && typeof obj == 'object') {
+                for (const key in obj) {
+                    //判断obj子元素是否为对象，如果是，递归复制
+                    if (obj[key] && typeof obj[key] === "object") {
+                        objClone[key] = deepCopy(obj[key]);
+                    } else {
+                        //如果不是，简单复制
+                        objClone[key] = obj[key];
+                    }
+                }
+            }
+            return objClone;
         }
     }
 }(window));

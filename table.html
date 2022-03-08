@@ -1,44 +1,62 @@
-<!DOCTYPE html> 
-<html lang="en">
+<!doctype html>
 <head>
-  <meta charset="UTF-8">
-  <title>Vue入门之htmlraw</title>
-  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <meta charset="utf-8"/>
 </head>
 <body>
-  <div id="app">
-    <table>
-      <tr>
-        <!-- computed里面的函数可以直接当成data里面的属性用，非常方便，注意没有括号！！！-->
-        <td>生日</td><td>{{ getBirthday }}</td>
-      </tr>
-      <tr>
-        <td>年龄</td><td>{{ age }}</td>
-      </tr>      
-      <tr>
-        <td>地址</td><td>{{ address }}</td>
-      </tr>
-    </table>
-  </div>
+<div>
+  <textarea id="query-text" cols="30" rows="3">hello</textarea>
+  <button onclick="translation()">翻译</button>
+</div>
 
-  <!-- 添加下面这行代码，动态增加 年龄，页面会有怎样的变化呢？？ -->
-  <button type="button" onclick="app.age+=1;" >加加</button>
-  <script>
-    var app = new Vue({         
-      el: '#app',               
-      data: {                   
-        birthday: 914228510514,     // 这是一个日期对象的值：1998年11月1日
-        age: 19,
-        address: '北京昌平区龙泽飞龙'
+<div>
+    <textarea id="translation-text" cols="30" rows="3"></textarea>
+</div>
+<script src="http://shared.ydstatic.com/js/jquery/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.bootcss.com/js-sha256/0.9.0/sha256.js"></script>
+<script type="text/javascript">
+function translation(){
+  var appKey = '4c9111811aa13b58';
+  var key = 'MKOdFqCcKQtYWjrQKBOtXoA3jT7qptpg';//注意：暴露appSecret，有被盗用造成损失的风险
+  var salt = (new Date).getTime();
+  var curTime = Math.round(new Date().getTime()/1000);
+  var query = $("#query-text").val();
+  // 多个query可以用\n连接  如 query='apple\norange\nbanana\npear'
+  var from = 'AUTO';
+  var to = 'AUTO';
+  var str1 = appKey + truncate(query) + salt + curTime + key;
+  console.log(str1);
+  var sign = sha256(str1);
+  $.ajax({
+      url: 'http://openapi.youdao.com/api',
+      type: 'post',
+      dataType: 'jsonp',
+      data: {
+          q: query,
+          appKey: appKey,
+          salt: salt,
+          from: from,
+          to: to,
+          sign: sign,
+          signType: "v3",
+          curtime: curTime,
       },
-      computed: {
-        // 把日期换成 常见规格格式的字符串。
-        getBirthday: function () {
-          var m = new Date(this.birthday);
-          return m.getFullYear() + '年' + m.getMonth() +'月'+ m.getDay()+'日';
-        }
-      }
-    });
-  </script>
+      success: function (data) {
+          var translationText = "";
+          if(data.translation){
+              data.translation.forEach(function(item){
+                  translationText += item;
+              })
+          }
+          $("#translation-text").val(translationText);
+      } 
+  });
+}
+
+function truncate(q){
+    var len = q.length;
+    if(len<=20) return q;
+    return q.substring(0, 10) + len + q.substring(len-10, len);
+}
+</script>
 </body>
-</html>

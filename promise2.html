@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+
+<script>
+/*	function Promise(fn) {
+	    var value = null,
+	        callbacks = [];  //callbacks为数组，因为可能同时有很多个回调
+	    this.then = function (onFulfilled) {
+	        callbacks.push(onFulfilled);
+	    };
+	    function resolve(value) {
+	        callbacks.forEach(function (callback) {
+	            callback(value);
+	        });
+	    }
+	    fn(resolve);
+	}
+*/
+	//极简的实现
+class Promise {
+    callbacks = [];
+    constructor(fn) {
+        fn(this._resolve.bind(this));
+    }
+    then(onFulfilled) {
+        this.callbacks.push(onFulfilled);
+    }
+    _resolve(value) {
+        this.callbacks.forEach(fn => fn(value));
+    }
+}
+
+//then 的说明
+let p = new Promise(resolve => {
+    setTimeout(() => {
+        console.log('done');
+        resolve('5秒');
+    }, 5000);
+});
+
+p.then(tip => {
+    console.log('then1', tip);
+});
+
+p.then(tip => {
+    console.log('then2', tip);
+});
+</script>
+</body>
+</html>
