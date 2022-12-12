@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id='canvas'></canvas>
+    <script>
+        const img = new Image();
+      img.src = 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fedpic_source%2F53%2F0a%2Fda%2F530adad966630fce548cd408237ff200.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1641713990&t=72f8af1f008cc345262d05086b4b2afe';
+      img.crossOrigin = "anonymous";
+      img.onload = function () {
+        const canvas = document.getElementById('canvas')
+        let _ix = img.width;
+        let _iy = img.height;
+        canvas.width = _ix;
+        canvas.height = _iy;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.font = "18px Microsoft Yahei";
+        ctx.fillStyle = "rgba(255, 255, 255, .5)";
+        ctx.translate(0, 0);
+        ctx.rotate((Math.PI / 180) * 15);//旋转
+        //水印密度
+        for (let i = 0; i < _iy / 120; i++) {  
+          for (let j = 0; j < _ix / 50; j++) {
+            ctx.fillText('11111', i * 120, j * 50, _ix);
+          }
+        }
+            const base64Url = canvas.toDataURL()
+            console.log(base64Url);
+            console.log(base64toBlob(base64Url));
+            console.log(translateBase64ImgToBlob(base64Url,"image/jpeg"));
+        }
+        /*
+            Base64 转成 Blob
+        */
+       function base64toBlob(dataurl) {
+            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: mime });
+       }
+       /*
+            Bolb 转 URL 
+            原理： 利用URL.createObjectURL为blob对象创建临时的URL
+       */
+       function translateBase64ImgToBlob(base64,contentType){
+            var arr = base64.split(',')  //去掉base64格式图片的头部
+            var bstr = atob(arr[1])   //atob()方法将数据解码
+            var leng = bstr.length
+            var u8arr = new Uint8Array(leng)
+            while(leng--){
+                u8arr[leng] =  bstr.charCodeAt(leng) //返回指定位置的字符的 Unicode 编码
+            }
+            var blob = new Blob([u8arr],{type:contentType})
+            var blobImg = {}
+            blobImg.url = URL.createObjectURL(blob)  //创建URL
+            blobImg.name = new Date().getTime() + '.png'
+            return blobImg 	
+      }
+
+    </script>
+</body>
+</html>

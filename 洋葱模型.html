@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>洋葱模型</title>
+</head>
+
+<body>
+  <script>
+    class WatchDog {
+      constructor({ sendParams }) {
+        this.context = {
+          sendParams: sendParams,
+        };
+        this.middlewares = [];
+      }
+      async send() {
+        await this.dispatch(0);
+        alert(JSON.stringify(this.context.sendParams));
+      }
+      use(middleware) {
+        this.middlewares.push(middleware);
+      }
+      dispatch(count) {
+        console.log('dispatch', count)
+        let fn = this.middlewares[count];
+        if (!fn) { // 没有退出
+          return Promise.resolve();
+        }
+        try {
+          debugger
+          return fn(this.context, async () => {
+            debugger
+            await this.dispatch(count + 1);
+          });
+        } catch (err) {
+          debugger
+          return Promise.reject(err);
+        }
+      }
+    }
+  </script>
+  <script>
+    const watchDog = new WatchDog({
+      sendParams: {
+        appcode: 'test-appcode',
+      },
+    });
+
+    watchDog.use(async (ctx, next) => {
+      debugger;
+      ctx.sendParams.a = 'a';
+      await next();
+    });
+
+    watchDog.use(async (ctx, next) => {
+      return new Promise((resove, reject) => {
+        debugger;
+        setTimeout(async () => {
+          debugger
+          ctx.sendParams.b = 'b';
+          resove();
+          await next();
+        }, 3000);
+      });
+    });
+
+    watchDog.send()
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script>
+		var search = function(nums, target) {
+		    var left = 0;
+		    var rigth = nums.length - 1; // 注意开闭区间 
+		    while(left <= rigth){ // 注意开闭区间
+		        var mid = parseInt(left + (rigth - left) / 2); // 注意转换成整数
+		        if(nums[mid] === target){ // 注意开闭区间
+		            return mid;
+		        }else if(nums[mid] > target) { // 注意开闭区间
+		            rigth = mid - 1;
+		        }else if(nums[mid] < target){ // 注意开闭区间
+		            left = mid + 1;
+		        }
+		    }
+		    return -1
+		};
+	</script>
+</body>
+</html>

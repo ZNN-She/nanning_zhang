@@ -25,7 +25,7 @@
 */
 	//极简的实现
 class Promise {
-    callbacks = [];
+    callbacks = []; // 存储回调函数
     constructor(fn) {
         fn(this._resolve.bind(this));
     }
