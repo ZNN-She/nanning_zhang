@@ -1,0 +1,75 @@
+<mxfile host="65bd71144e">
+    <diagram id="b_vCr8GpuOksrBNmXkzI" name="第 1 页">
+        <mxGraphModel dx="2082" dy="767" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-1" target="Y7YN4K_lgmLBERzIQsgG-20">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="65" y="350" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-1" target="Y7YN4K_lgmLBERzIQsgG-12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-1" target="Y7YN4K_lgmLBERzIQsgG-27">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-1" value="new Promise((resolveFn: () =&amp;gt; void, rejectFn: () =&amp;gt; void) =&amp;gt; void)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-150" y="200" width="430" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-6" target="Y7YN4K_lgmLBERzIQsgG-12">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-6" value="执行 then(onFulFn: (resolveValue) =&amp;gt;&amp;nbsp; void, onRejectFn: (rejectValue) =&amp;gt; void) 函数" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="200" width="450" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-7" value="把then里传进来的onFulFn和onRejectFn两个函数暂存起来&lt;br&gt;this.onFul.push(onFulFn);&lt;br&gt;this.onFul.push(onRejectFn);" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="265" y="300" width="330" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-12" target="Y7YN4K_lgmLBERzIQsgG-7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-12" value="初始padding状态" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-16" target="Y7YN4K_lgmLBERzIQsgG-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-16" value="Promise" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="5" y="70" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-20" target="Y7YN4K_lgmLBERzIQsgG-21">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-20" value="执行resolveFn" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="110" y="390" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-21" target="Y7YN4K_lgmLBERzIQsgG-23">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-21" value="padding ---&amp;gt; resolve" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="110" y="530" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-23" value="执行通过then传递进来的回调函数&lt;br&gt;this.onFul.forEach(fn =&amp;gt; fn(this.value))" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="660" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-27" target="Y7YN4K_lgmLBERzIQsgG-29">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-27" value="执行rejectFn" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-140" y="390" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Y7YN4K_lgmLBERzIQsgG-29" target="Y7YN4K_lgmLBERzIQsgG-30">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-29" value="padding ---&amp;gt; reject" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-140" y="530" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="Y7YN4K_lgmLBERzIQsgG-30" value="执行通过then传递进来的回调函数&lt;br&gt;this.onReject.forEach(fn =&amp;gt; fn(error))" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-200" y="660" width="240" height="70" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -9,65 +9,74 @@
 
 <body>
   <script>
-    class WatchDog {
-      constructor({ sendParams }) {
-        this.context = {
-          sendParams: sendParams,
-        };
+    // 实现
+    class Compose {
+      constructor() {
         this.middlewares = [];
       }
-      async send() {
-        await this.dispatch(0);
-        alert(JSON.stringify(this.context.sendParams));
+      async run() {
+        this.dispatch(0);
       }
       use(middleware) {
         this.middlewares.push(middleware);
       }
       dispatch(count) {
-        console.log('dispatch', count)
         let fn = this.middlewares[count];
         if (!fn) { // 没有退出
-          return Promise.resolve();
+          return false;
         }
-        try {
-          debugger
-          return fn(this.context, async () => {
-            debugger
-            await this.dispatch(count + 1);
-          });
-        } catch (err) {
-          debugger
-          return Promise.reject(err);
-        }
+        return fn(() => {
+          this.dispatch(count + 1);
+        });
       }
     }
-  </script>
-  <script>
-    const watchDog = new WatchDog({
-      sendParams: {
-        appcode: 'test-appcode',
-      },
-    });
 
-    watchDog.use(async (ctx, next) => {
-      debugger;
-      ctx.sendParams.a = 'a';
-      await next();
-    });
+    // 创建实体
+    const compose = new Compose();
 
-    watchDog.use(async (ctx, next) => {
-      return new Promise((resove, reject) => {
-        debugger;
-        setTimeout(async () => {
-          debugger
-          ctx.sendParams.b = 'b';
-          resove();
-          await next();
-        }, 3000);
-      });
-    });
+    const t1 = (next) => {
+      console.log("t1 run");
+      next();
+      console.log("result1");
+    };
 
-    watchDog.send()
+    const t2 = (next) => {
+      console.log("t2 run");
+      next();
+      console.log("result2");
+    };
+    const t3 = (next) => {
+      console.log("t3 run");
+      next();
+      console.log("result3");
+    };
+
+    // 注册中间件
+    watchDog.use(t1);
+    watchDog.use(t2);
+    watchDog.use(t3);
+
+    // 执行
+    compose.run()
+
+    // watchDog.use(async (ctx, next) => {
+    //   debugger;
+    //   ctx.sendParams.a = 'a';
+    //   await next();
+    // });
+
+    // watchDog.use(async (ctx, next) => {
+    //   return new Promise((resove, reject) => {
+    //     debugger;
+    //     setTimeout(async () => {
+    //       debugger
+    //       ctx.sendParams.b = 'b';
+    //       resove();
+    //       await next();
+    //     }, 3000);
+    //   });
+    // });
+
   </script>
 </body>
 

@@ -1,104 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
 <body>
-  <input id='text' type="text" placeholder="内容" value="文字文字文字">
 
-  <div>
-    距离顶部位置：<input id='top' type="text" placeholder="百分比" value="222">
-  </div>
-  <div>
-    距离左侧位置：<input id='left' type="text" placeholder="百分比" value="222">
-  </div>
+	<script>
+		const p = new Promise((resolve, reject) => {
+		 	setTimeout(() => {
+		 		resolve()
+		 	}, 0)
+		});
 
+		p.then(() => {
+			window.test();
+			console.log(window.getJsToken)
+		})
+	</script>
 
-  <div>
-    logo：<input id='logo' type="text" placeholder="百分比" value="./images/1.png">
-  </div>
-  <div>
-    logo位置：<input id='logo-l' type="text" placeholder="左" value="200">
-    <input id='logo-r' type="test" placeholder="右" value="200">
-  </div>
-
-  <button onclick="download()">download</button>
-  <button onclick="preview()">预览</button>
-
-  <div id='preview'></div>
-
-  <script>
-    function preview(){
-      createCanvas(function(canvas){
-        const e = document.getElementById('canvas')
-        if(e){
-          document.getElementById('preview').removeChild(e)
-        }
-        document.getElementById('preview').append(canvas)
-      })
-    }
-
-    function createCanvas(callback){
-      const canvas = document.createElement('canvas');
-      canvas.id = 'canvas';
-      const ctx = canvas.getContext('2d');
-      const image = new Image(); // Using optional size for image
-      image.onload = drawImageActualSize; // Draw when image has loaded
-      image.src = './images/back-image@2x.png'
-
-      function drawImageActualSize() {
-        // Use the intrinsic size of image in CSS pixels for the canvas element
-        canvas.width = this.naturalWidth;
-        canvas.height = this.naturalHeight;
-
-        // Will draw the image as 300x227, ignoring the custom size of 60x45
-        // given in the constructor
-        ctx.drawImage(this, 0, 0);
-
-        logo(canvas, callback);
-      }
-    }
-
-    function logo(canvas, callback){
-      const ctx = canvas.getContext('2d');
-
-      const imageLogo = new Image(); // Using optional size for image
-      imageLogo.src = document.getElementById('logo').value;
-      imageLogo.onload = function(){
-
-        ctx.drawImage(this, document.getElementById("logo-l").value, document.getElementById("logo-r").value, 100, 100);
-
-
-        font(canvas, callback);
-      } 
-    }
-
-    function font(canvas, callback){
-        const ctx = canvas.getContext('2d');
-
-        ctx.font = "48px serif";
-        ctx.fillStyle = "red";
-        ctx.fillText(document.getElementById('text').value, document.getElementById('top').value, document.getElementById('left').value);
-
-        ctx.font = "28px serif";
-        ctx.fillStyle = "blue";
-        ctx.fillText(document.getElementById('text').value, 100, 100);
-
-        callback(canvas);
-    }
-
-    function download(){
-      createCanvas(function(canvas){
-        const image = new Image();
-        image.src = canvas.toDataURL('image/png');
-
-        const alink = document.createElement('a');
-        alink.href = image.src;
-        alink.download = '5周年纪念头像.png';
-        alink.click();
-      })
-    }
-
-  </script>
+	<script>
+		for (var i = 0; i <= 100000; i++) {
+			
+		}
+		window.test = () => {
+			// window.alert(123)
+			console.log(123, 'test')
+		}
+	</script>
+	<script> var bp_bizid = "JDMINI-HomePage"; </script>
+	<!--引入指纹采集JS M站 m-tk.js PC站 pc-tk.js -->
+	<script src="https://gias.jd.com/js/m-tk.js" />
+	
 </body>
 </html>
